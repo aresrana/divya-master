@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1064565526029",
+    "project_id": "html-740f9",
+    "storage_bucket": "html-740f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064565526029:android:61c75311471018d9138f44",
+        "android_client_info": {
+          "package_name": "com.ares.divya.divya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064565526029-nh26f8rjt3iluqvc85c230b0e27cmvcp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx3oMOYlhla2V6VNUVCD02Dti6PASSg7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064565526029-nh26f8rjt3iluqvc85c230b0e27cmvcp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1064565526029-4c8hej8slje6i46b0qae9qu51mc016l2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ares.divya.divya"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
