@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:audio_service/audio_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/model/song.dart';
 
@@ -16,15 +16,15 @@ class AudioPlayeService  {
 
   AudioPlayeService._() {
     _audioPlayer.onPlayerStateChanged.listen((state) {
-      isPlaying = state == PlayerState.playing;
+      isPlaying = state == PlayerState.PLAYING;
     });
     _audioPlayer.onDurationChanged.listen((newDuration) {
       duration = newDuration;
     });
-    _audioPlayer.onPositionChanged.listen((newPosition) {
+    _audioPlayer.onAudioPositionChanged.listen((newPosition) {
       position = newPosition;
     });
-    _audioPlayer.onPlayerComplete.listen((event) {
+    _audioPlayer.onPlayerCompletion.listen((event) {
       if (onAudioComplet != null) {
         onAudioComplet!();
       }
@@ -33,35 +33,34 @@ class AudioPlayeService  {
 
   static AudioPlayeService? _instance;
 
-  Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
+  Stream<Duration> get positionStream => _audioPlayer.onAudioPositionChanged;
 
   static AudioPlayeService get instance {
     return _instance ??= AudioPlayeService._();
   }
 
-  Future<void> pause() async {
+ pause() async {
     await _audioPlayer.pause();
   }
 
-  Future<void> resume() async {
+resume() async {
     await _audioPlayer.resume();
   }
 
-  void playSong(Song song) async {
+ playSong(Song song) async {
     // final file = await DefaultCacheManager().getSingleFile(song.music);
     // String filePath = file.path;
     await _audioPlayer.pause();
     await _audioPlayer.seek(Duration.zero);
-
-    await _audioPlayer.play(song.music as Source);
+    await _audioPlayer.play(song.music);
   }
 
-  void dispose() {
+dispose() {
     _audioPlayer.dispose();
     _instance = null;
   }
 
-  void seekTo() {
+   seekTo(Duration position) {
     log('$duration');
     _audioPlayer.seek(const Duration(minutes: 5));
   }

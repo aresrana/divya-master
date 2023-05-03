@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
 import 'package:provider/provider.dart';
 
+import '../onTapMiniPlayer/tapMiniPlayer.dart';
 import '../services/audio_player_service.dart';
 
 class MiniPlayer extends StatefulWidget {
@@ -125,7 +126,14 @@ class _MiniPlayer extends State<MiniPlayer> {
                         ),
                       ),
                       onTap: () {
-                        print(audioPlayerService.position);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => TapMiniPlayer()),
+                        );
+
+
+
                       },
                     )),
               ],

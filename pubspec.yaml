@@ -39,7 +39,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   webview_flutter_plus:
-  audioplayers:
+  audioplayers: ^0.20.1
   marquee: ^2.2.3
   carousel_slider:
   page_transition:
@@ -61,12 +61,16 @@ dependencies:
   flutter_background_service:
   flutter_native_splash:
   epub_view: ^3.0.0
-
-
   image_picker:
   flutter_image_compress: ^1.0.0
   flutter_settings_screens: ^0.3.3-null-safety+2
   cached_network_image: ^3.2.3
+  volume_controller:
+  flutter_blue:
+  audio_session: ^0.1.13
+  audio_service: ^0.18.9
+
+
 
 
 dev_dependencies:
@@ -117,6 +121,8 @@ flutter:
     - images/resurrection.jpg
     - images/tomb.jpg
     - images/renew.jpg
+    - images/dedication.jpg
+    - images/saa.jpg
     - assets/Romanized.epub
 
 

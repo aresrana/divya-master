@@ -47,9 +47,10 @@ class _PraisePageState extends State<PraisePage> {
     ]);
 
     final provider = context.watch<SongProvider>();
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
+
             appBar: AppBar(
+              title: Text("प्रशंसाका गीतहरू",style: TextStyle(color: Colors.black),),
               backgroundColor: Colors.grey[300],
               elevation:0 ,
               leading: IconButton(
@@ -58,9 +59,11 @@ class _PraisePageState extends State<PraisePage> {
               ),
             ),
             backgroundColor: Colors.grey[300],
-            bottomNavigationBar:
-            provider.playingSong != null ?  MiniPlayer() : null,
-            body: SingleChildScrollView(
+        floatingActionButton: provider.playingSong != null ? MiniPlayer() : null ,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, //
+            body: SafeArea(
+
+           child: SingleChildScrollView(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -106,11 +109,11 @@ class _PraisePageState extends State<PraisePage> {
                         height: 28,
                       ),
                       const Center(
-                        child: Text('I will praise thy name for ever and ever.',
+                        child: Text('म सदा-सर्वदा तपाईंको नामको प्रशंसा गर्नेछु।',
                             style: TextStyle(fontSize: 18,)),
                       ),
                       const Center(
-                        child: Text('Psalm 145:2',
+                        child: Text('भजनसंग्रह १४५:२',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,

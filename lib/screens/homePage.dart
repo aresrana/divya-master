@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:divya/screens/Dedication.dart';
 import 'package:divya/screens/praise.dart';
+import 'package:divya/screens/prayer.dart';
 import 'package:divya/screens/romanized.dart';
+import 'package:divya/screens/witness.dart';
 import 'package:divya/services/song_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +14,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/song.dart';
 import '../services/auth.dart';
+import 'Promise.dart';
+import 'calling.dart';
+import 'christLife.dart';
 import 'worship.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -34,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _imageFuture = showData();
+   // _imageFuture = showData();
     // });
     Provider.of<SongProvider>(context, listen: false)
         .getSongsByCollection('Worship')
@@ -45,22 +51,22 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Future<File?> showData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    final base64Image = prefs.getString('myImageKey');
-    if (base64Image != null) {
-      final bytes = base64Decode(base64Image);
-      final appDir = await getApplicationDocumentsDirectory();
-      final imageFile = File('${appDir.path}/myImage.jpg');
-      await imageFile.writeAsBytes(bytes);
-      setState(() {
-        _imageFile = imageFile;
-      });
-      return _imageFile;
-    } else {
-      return null;
-    }
-  }
+  // Future<File?> showData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final base64Image = prefs.getString('myImageKey');
+  //   if (base64Image != null) {
+  //     final bytes = base64Decode(base64Image);
+  //     final appDir = await getApplicationDocumentsDirectory();
+  //     final imageFile = File('${appDir.path}/myImage.jpg');
+  //     await imageFile.writeAsBytes(bytes);
+  //     setState(() {
+  //       _imageFile = imageFile;
+  //     });
+  //     return _imageFile;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -78,12 +84,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-              Container(
+ Container(
                   padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(children: [
+                  // child: Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //
+                  //   children: [
+                     child: Column(
+                         children: [
                         Text('Dear ${user?.email}',
                             style:
                                 TextStyle(fontSize: 18, color: Colors.white)),
@@ -94,73 +103,74 @@ class _MyHomePageState extends State<MyHomePage> {
                                 color: Color.fromRGBO(179, 179, 179, 100))),
                         SizedBox(height: 15),
                       ]),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: FutureBuilder<File?>(
-                          future: _imageFuture,
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else if (snapshot.data == null) {
-                              return Text('No image available');
-                            } else {
-                              File imageFile = snapshot.data!;
-                              return CircleAvatar(
-                                radius: 40,
-                                backgroundImage: imageFile != null
-                                    ? FileImage(imageFile!)
-                                    : null,
-                              );
-                            }
-                          },
-                        ),
-
-                        // Container(
-                        //     height: 100,
-                        //     width: 100,
-                        //     child: FutureBuilder<File?>(
-                        //       future: _imageFuture,
-                        //       builder: (context, snapshot) {
-                        //         if (snapshot.connectionState ==
-                        //             ConnectionState.waiting) {
-                        //           return CircularProgressIndicator();
-                        //         } else if (snapshot.hasError) {
-                        //           return Text('Error: ${snapshot.error}');
-                        //         } else if (snapshot.data == null) {
-                        //           return Text('No image available');
-                        //         } else {
-                        //           File imageFile = snapshot.data!;
-                        //           return CircleAvatar(
-                        //             radius: 40,
-                        //             backgroundImage: imageFile != null && imageFile.existsSync()
-                        //                 ? FileImage(imageFile)
-                        //                 : null,
-                        //           );
-                        //         }
-                        //       },
-                        //     )
-
-                        //
-                        // ValueListenableBuilder<File?>(
-                        //   valueListenable: imageNotifier,
-                        //   builder: (context, imageFile, _) {
-                        //     if (imageFile == null) {
-                        //       return CircularProgressIndicator(); // show a loading indicator
-                        //     } else {
-                        //       return CircleAvatar(
-                        //         radius: 50,
-                        //         backgroundImage: FileImage(imageFile),
-                        //       );
-                        //     }
-                        //   },
-                        // )
-                      ),
-                    ],
-                  )),
+                      // Container(
+                      //   height: 50,
+                      //   width: 50,
+                      //   child: FutureBuilder<File?>(
+                      //     future: _imageFuture,
+                      //     builder: (context, snapshot) {
+                      //       if (snapshot.connectionState ==
+                      //           ConnectionState.waiting) {
+                      //         return CircularProgressIndicator();
+                      //       } else if (snapshot.hasError) {
+                      //         return Text('Error: ${snapshot.error}');
+                      //       } else if (snapshot.data == null) {
+                      //         return Text('No image available');
+                      //       } else {
+                      //         File imageFile = snapshot.data!;
+                      //         return CircleAvatar(
+                      //           radius: 20,
+                      //           backgroundImage: imageFile != null
+                      //               ? FileImage(imageFile!)
+                      //               : null,
+                      //         );
+                      //       }
+                      //     },
+                      //   ),
+                      //
+                      //   // Container(
+                      //   //     height: 100,
+                      //   //     width: 100,
+                      //   //     child: FutureBuilder<File?>(
+                      //   //       future: _imageFuture,
+                      //   //       builder: (context, snapshot) {
+                      //   //         if (snapshot.connectionState ==
+                      //   //             ConnectionState.waiting) {
+                      //   //           return CircularProgressIndicator();
+                      //   //         } else if (snapshot.hasError) {
+                      //   //           return Text('Error: ${snapshot.error}');
+                      //   //         } else if (snapshot.data == null) {
+                      //   //           return Text('No image available');
+                      //   //         } else {
+                      //   //           File imageFile = snapshot.data!;
+                      //   //           return CircleAvatar(
+                      //   //             radius: 40,
+                      //   //             backgroundImage: imageFile != null && imageFile.existsSync()
+                      //   //                 ? FileImage(imageFile)
+                      //   //                 : null,
+                      //   //           );
+                      //   //         }
+                      //   //       },
+                      //   //     )
+                      //
+                      //   //
+                      //   // ValueListenableBuilder<File?>(
+                      //   //   valueListenable: imageNotifier,
+                      //   //   builder: (context, imageFile, _) {
+                      //   //     if (imageFile == null) {
+                      //   //       return CircularProgressIndicator(); // show a loading indicator
+                      //   //     } else {
+                      //   //       return CircleAvatar(
+                      //   //         radius: 50,
+                      //   //         backgroundImage: FileImage(imageFile),
+                      //   //       );
+                      //   //     }
+                      //   //   },
+                      //   // )
+                      // ),
+                  //  ],
+                //  )
+        ),
               const SizedBox(
                 height: 15,
               ),
@@ -230,7 +240,9 @@ class _MyHomePageState extends State<MyHomePage> {
               //         },
               //       ),
               // const SizedBox(height: 50),
-            ]))
+            ])
+
+    )
             // _html(context)
 
             ));
@@ -316,7 +328,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => PrayerPage()));
                 },
               ),
               SizedBox(height: 8),
@@ -345,12 +357,41 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => PromisePage()));
                 },
               ),
               SizedBox(height: 8),
               Text(
                 "promise(प्रतिज्ञा)",
+                style: TextStyle(
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+              )
+            ]),
+            SizedBox(
+              width: MediaQuery.of(context).size.height * 0.01,
+            ),
+            Column(children: [
+              GestureDetector(
+                child: Container(
+                  width: MediaQuery.of(context).size.height * 0.18,
+                  height: MediaQuery.of(context).size.height * 0.18,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    image: const DecorationImage(
+                        image: AssetImage('images/dedication.jpg'),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => DedicationPage()));
+                },
+              ),
+              SizedBox(height: 8),
+              Text(
+                "dedication(समर्पण)",
                 style: TextStyle(
                     fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
@@ -374,7 +415,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => WitnessPage()));
                 },
               ),
               SizedBox(height: 8),
@@ -403,7 +444,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => ChristLifePage()));
                 },
               ),
               SizedBox(height: 8),
@@ -433,7 +474,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => CallingPage()));
                 },
               ),
               SizedBox(height: 8),

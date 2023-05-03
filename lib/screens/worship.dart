@@ -134,11 +134,11 @@ class _WorshipSongPage extends State<WorshipSongPage> {
                     height: 28,
                   ),
                   const Center(
-                    child: Text('Come, let us bow down in worship.',
+                    child: Text('आओ,हामी दण्डवत् गरौं र निहुरौं ।',
                         style: TextStyle(fontSize: 18)),
                   ),
                   const Center(
-                    child: Text('Psalm 95:6',
+                    child: Text('भजनसंग्रह ९५:६',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

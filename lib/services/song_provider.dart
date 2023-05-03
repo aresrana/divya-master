@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 
 class SongProvider extends ChangeNotifier {
   SongProvider({required col});
-  AudioPlayer _audioPlayer = AudioPlayer();
+
 
   Song? _playingSong;
   List<Song> _songs = [];
@@ -79,4 +79,5 @@ class SongProvider extends ChangeNotifier {
     _isPlaying = state;
     notifyListeners();
   }
+
 }

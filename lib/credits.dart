@@ -11,3 +11,5 @@
 //https://www.freepik.com/free-photo/bright-climate-shiny-sky-high_1065070.htm#query=rapture&position=35&from_view=search&track=robertav1_2_sidr
 //https://www.freepik.com/free-photo/front-view-little-stone-grave-moon-sand_15003334.htm#query=tomb&position=3&from_view=search&track=robertav1_2_sidr
 //Image by <a href="https://pixabay.com/users/asundermeier-448808/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5898545">Anke Sundermeier</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=5898545">Pixabay</a>
+//https://www.freepik.com/free-photo/resurrection-jesus-christ-concept-silhouette-cross-hill-sunrise-background_3952233.htm#query=surrender&position=25&from_view=search&track=sph
+//https://www.freepik.com/free-photo/modern-microphone_10093707.htm#query=song&position=28&from_view=search&track=sph
