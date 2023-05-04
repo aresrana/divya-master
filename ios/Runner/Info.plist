@@ -28,6 +28,9 @@
 	<true/>
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>Allow access to read files from the document directory</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>This app uses local network resources to discover and connect to printers or other devices on your network.</string>
+
 	<key>NSCameraUsageDescription</key>
 	<string>uses Cameras For Profile Pic Only</string>
 	<key>NSPhotoLibraryUsageDescription</key>

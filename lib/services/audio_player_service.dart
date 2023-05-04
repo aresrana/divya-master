@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:audio_service/audio_service.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/model/song.dart';
 

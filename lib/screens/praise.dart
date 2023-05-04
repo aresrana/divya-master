@@ -20,6 +20,7 @@ class _PraisePageState extends State<PraisePage> {
   bool searching = false;
   List<Song> _songList = [];
   FocusNode focusNode = FocusNode();
+
   @override
   void initState() {
     Provider.of<SongProvider>(context, listen: false)
