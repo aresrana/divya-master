@@ -1,12 +1,20 @@
+import 'package:divya/constants/app_routes.dart';
+import 'package:divya/constants/constants.dart';
+import 'package:divya/controllers/language_controller.dart';
+import 'package:divya/screens/language/messages.dart';
 import 'package:divya/screens/onboarding/screen_one.dart';
+import 'package:divya/secret/secrets.dart';
 import 'package:divya/services/song_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:get/get.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:wiredash/wiredash.dart';
+import 'package:divya/screens/language/dep.dart' as dep;
 //import 'package:wiredash/wiredash.dart';
 
 import 'componet/loginCheck.dart';
@@ -26,38 +34,55 @@ late int? initScreen;
 
   initScreen = await preferences.getInt('initScreen');
   await preferences.setInt('initScreen',1);
+  Map<String,Map<String,String>> _languages = await dep.init();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(MyApp());
+    runApp(MyApp(languages: _languages,));
   });
-  runApp(const MyApp());
+  runApp(MyApp(languages: _languages,));
 }
 
 class MyApp extends StatelessWidget {
+  final Map<String,Map<String,String>> languages;
 
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({required this.languages});
   @override
   Widget build(BuildContext context) {
     return
-     //  Wiredash(
-     //    projectId: '$projectid',
-     //    secret: '$secret',
-     //
-     // child:
+
+
+
+      Wiredash(
+        projectId: '$projectid',
+        secret: '$secret',
+
+     child:
 
      MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SongProvider(col: '')),
       ],
-      child: MaterialApp(
+      child: GetBuilder<LocalizationController> (builder: (localizationController){
+
+
+return
+    GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(primarySwatch: Colors.blue),
-          initialRoute: initScreen ==0 || initScreen == null ? 'onboard' : 'home',
-          routes: {
-          'onboard': (context)=> OnboardingScreenOne(),
-           'home' : (context)=>  LoginCheck()           }
+          theme: ThemeData(primarySwatch: Colors.blue,    splashColor: Colors.transparent,),
+          locale: localizationController.locale,
+          translations: Messages(languages:languages),
+          fallbackLocale: Locale(AppConstants.languages[0].languageCode,
+          AppConstants.languages[0].countryCode),
+          initialRoute: RouteHelper.getSplashRoute(),
+          getPages: RouteHelper.routes,
+          // routes: {
+          // 'onboard': (context)=> OnboardingScreenOne(),
+          //  'home' : (context)=>  LoginCheck()
+
+
+    );}
     )
-     );
+     ));
     //);
   }
 }

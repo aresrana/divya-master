@@ -1,6 +1,6 @@
 import 'dart:isolate';
 import 'dart:ui';
-
+import 'package:flutter_share/flutter_share.dart';
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:divya/model/song.dart';
@@ -10,7 +10,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
 import '../screens/lyrics.dart';
 import '../services/audio_player_service.dart';
 import '../services/song_provider.dart';
@@ -44,7 +43,7 @@ class _SongWidgetState extends State<SongWidget> {
     var status = await Permission.storage.request();
     if (status.isGranted) {
       final baseStorage = await getExternalStorageDirectory();
-      print(baseStorage);
+
       await FlutterDownloader.enqueue(
           url: song,
           savedDir: baseStorage!.path,
@@ -217,7 +216,13 @@ class _SongWidgetState extends State<SongWidget> {
                               ),
                               IconButton(
                                 icon: const Icon(Icons.download),
-                                onPressed: () {
+                                onPressed: () async {
+                                  await FlutterShare.share(
+                                    title: 'Check out this song!',
+                                    text: '${widget.song.title} - ${widget.song.name}',
+                                    linkUrl: widget.song.music,
+                                    chooserTitle: 'Share this song',
+                                  );
                                   download(widget.song.music);
                                 },
                               )

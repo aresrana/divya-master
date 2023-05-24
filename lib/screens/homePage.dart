@@ -1,25 +1,34 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:divya/screens/Dedication.dart';
+import 'package:divya/screens/gospel.dart';
+import 'package:divya/screens/newYear.dart';
 import 'package:divya/screens/praise.dart';
 import 'package:divya/screens/prayer.dart';
+import 'package:divya/screens/rapture.dart';
+import 'package:divya/screens/resurrection.dart';
 import 'package:divya/screens/romanized.dart';
+import 'package:divya/screens/trackRecording/recorder.dart';
+import 'package:divya/screens/trackRecording/trackList.dart';
 import 'package:divya/screens/witness.dart';
 import 'package:divya/services/song_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../model/song.dart';
 import '../services/auth.dart';
-import 'Meetings/places.dart';
+import 'Meetings/meetings.dart';
 import 'Promise.dart';
+import 'atirikta.dart';
 import 'calling.dart';
 import 'christLife.dart';
+import 'death.dart';
 import 'worship.dart';
+import '../../model/subMeetingModel.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -48,30 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<SongProvider>(context, listen: false)
         .getSongsByCollection('Worship')
         .then((value) {
-      setState(() {
-        _songList = value;
-      });
+          if (mounted) {
+            setState(() {
+              _songList = value;
+            });
+          }
     });
 
     _stream = FirebaseFirestore.instance.collection('Countries').snapshots();
   }
-
-  // Future<File?> showData() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final base64Image = prefs.getString('myImageKey');
-  //   if (base64Image != null) {
-  //     final bytes = base64Decode(base64Image);
-  //     final appDir = await getApplicationDocumentsDirectory();
-  //     final imageFile = File('${appDir.path}/myImage.jpg');
-  //     await imageFile.writeAsBytes(bytes);
-  //     setState(() {
-  //       _imageFile = imageFile;
-  //     });
-  //     return _imageFile;
-  //   } else {
-  //     return null;
-  //   }
-  // }
 
   @override
   void dispose() {
@@ -80,6 +74,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     final provider = context.watch<SongProvider>();
     return Scaffold(
         backgroundColor: Color.fromRGBO(18, 18, 18, 1),
@@ -99,80 +98,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(children: [
                   Text('Dear ${user?.email}',
                       style: TextStyle(fontSize: 18, color: Colors.white)),
-                  const Text('PRAISE THE LORD (जयमसिही कि!)',
+                   Text('Praise_the_Lord'.tr,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                           color: Color.fromRGBO(179, 179, 179, 100))),
                   SizedBox(height: 15),
                 ]),
-                // Container(
-                //   height: 50,
-                //   width: 50,
-                //   child: FutureBuilder<File?>(
-                //     future: _imageFuture,
-                //     builder: (context, snapshot) {
-                //       if (snapshot.connectionState ==
-                //           ConnectionState.waiting) {
-                //         return CircularProgressIndicator();
-                //       } else if (snapshot.hasError) {
-                //         return Text('Error: ${snapshot.error}');
-                //       } else if (snapshot.data == null) {
-                //         return Text('No image available');
-                //       } else {
-                //         File imageFile = snapshot.data!;
-                //         return CircleAvatar(
-                //           radius: 20,
-                //           backgroundImage: imageFile != null
-                //               ? FileImage(imageFile!)
-                //               : null,
-                //         );
-                //       }
-                //     },
-                //   ),
-                //
-                //   // Container(
-                //   //     height: 100,
-                //   //     width: 100,
-                //   //     child: FutureBuilder<File?>(
-                //   //       future: _imageFuture,
-                //   //       builder: (context, snapshot) {
-                //   //         if (snapshot.connectionState ==
-                //   //             ConnectionState.waiting) {
-                //   //           return CircularProgressIndicator();
-                //   //         } else if (snapshot.hasError) {
-                //   //           return Text('Error: ${snapshot.error}');
-                //   //         } else if (snapshot.data == null) {
-                //   //           return Text('No image available');
-                //   //         } else {
-                //   //           File imageFile = snapshot.data!;
-                //   //           return CircleAvatar(
-                //   //             radius: 40,
-                //   //             backgroundImage: imageFile != null && imageFile.existsSync()
-                //   //                 ? FileImage(imageFile)
-                //   //                 : null,
-                //   //           );
-                //   //         }
-                //   //       },
-                //   //     )
-                //
-                //   //
-                //   // ValueListenableBuilder<File?>(
-                //   //   valueListenable: imageNotifier,
-                //   //   builder: (context, imageFile, _) {
-                //   //     if (imageFile == null) {
-                //   //       return CircularProgressIndicator(); // show a loading indicator
-                //   //     } else {
-                //   //       return CircleAvatar(
-                //   //         radius: 50,
-                //   //         backgroundImage: FileImage(imageFile),
-                //   //       );
-                //   //     }
-                //   //   },
-                //   // )
-                // ),
-                //  ],
-                //  )
               ),
               const SizedBox(
                 height: 15,
@@ -219,6 +151,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   ])),
               const SizedBox(height: 20),
               _romanizedSong(context),
+              const SizedBox(height: 20),
+              Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(children: const [
+                    SizedBox(width: 10),
+                    Text('Recording Tracks',
+                        style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white))
+                  ])),
+                      const SizedBox(height: 20),
+                      _trackRecording(context),
               SizedBox(height: MediaQuery.of(context).size.height * 0.10),
               // Container(
               //     padding: const EdgeInsets.only(left: 10),
@@ -493,10 +438,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => GospelPage()));
                 },
               ),
               SizedBox(height: 8),
@@ -525,7 +468,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                          builder: (context) => ResurrectionPage()));
                 },
               ),
               SizedBox(height: 8),
@@ -551,10 +494,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => RapturePage()));
                 },
               ),
               SizedBox(height: 8),
@@ -580,10 +521,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => DeathPage()));
                 },
               ),
               SizedBox(height: 8),
@@ -609,15 +548,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => WorshipSongPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => NewYearPage()));
                 },
               ),
               SizedBox(height: 8),
               Text(
                 "New Year(नयाँ वर्ष )",
+                style: TextStyle(
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+              )
+            ]),
+            SizedBox(
+              width: MediaQuery.of(context).size.height * 0.01,
+            ),
+            Column(children: [
+              GestureDetector(
+                child: Container(
+                  width: MediaQuery.of(context).size.height * 0.18,
+                  height: MediaQuery.of(context).size.height * 0.18,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                    image: const DecorationImage(
+                        image: AssetImage('images/Atirikta.jpg'),
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AtiriktaPage()));
+                },
+              ),
+              SizedBox(height: 8),
+              Text(
+                "Additional(अतिरिक्त)",
                 style: TextStyle(
                     fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
@@ -628,75 +592,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _meetings(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 5),
-      height: MediaQuery.of(context).size.height * 0.18,
-      child: StreamBuilder<QuerySnapshot>(
-        stream: _stream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Text('Loading...');
-            default:
-              List<DocumentSnapshot> documentList = snapshot.data!.docs;
+        padding: const EdgeInsets.only(left: 5),
+        height: MediaQuery.of(context).size.height * 0.18,
+        child: StreamBuilder<QuerySnapshot>(
+            stream: _stream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              }
+
+              if (!snapshot.hasData) {
+                return CircularProgressIndicator();
+              }
+
+              // Map each document in the collection to a custom object
+              List<MyObject> myObjects = snapshot.data!.docs
+                  .map((doc) => MyObject.fromSnapshot(doc))
+                  .toList();
+
               return ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: documentList.length,
-                itemBuilder: (context, index) {
-                  String country = documentList[index]['country'];
-                  Widget imageWidget;
-                  if (index == 0) {
-                    imageWidget = ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.3), BlendMode.multiply),
-                      child: Image.asset(
-                        'images/nepi.jpg',
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        width: MediaQuery.of(context).size.height * 0.18,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  } else if (index == 1) {
-                    imageWidget = ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.1), BlendMode.multiply),
-                      child: Image.asset(
-                        'images/UK.jpg',
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        width: MediaQuery.of(context).size.height * 0.18,
-                        fit: BoxFit.fill,
-                      ),
-                    );
-                  } else if (index == 2) {
-                    imageWidget = ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.1), BlendMode.multiply),
-                      child: Image.asset(
-                        'images/USA.jpg',
-                        height: MediaQuery.of(context).size.height * 0.18,
-                        width: MediaQuery.of(context).size.height * 0.18,
-                        fit: BoxFit.fill,
-                      ),
-                    );
-                  } else {
-                    imageWidget = Image.asset(
-                      'images/ind.jpg',
-                      width: MediaQuery.of(context).size.height * 0.18,
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      fit: BoxFit.cover,
-                    );
-                  }
-                  return Padding(
-                      padding: EdgeInsets.only(right: 10.0),
-                      child: Container(
-                          width: MediaQuery.of(context).size.height * 0.18,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(22)),
-                          ),
-                          child: GestureDetector(
-                              child: Card(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: myObjects.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyMeetingScreen(
+                                    snapshot.data!.docs[index].id,
+                                    myObjects[index].country),
+                              ));
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(right: 10.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.height * 0.18,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(22)),
+                              ),
+                              child: GestureDetector(
+                                  child: Card(
                                 margin: EdgeInsets.zero,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -705,27 +643,29 @@ class _MyHomePageState extends State<MyHomePage> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
-                                      child: imageWidget,
+                                      child: ColorFiltered(
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.black.withOpacity(0.2),
+                                              BlendMode.darken),
+                                          child: CachedNetworkImage(
+                                            imageUrl: myObjects[index].image,
+                                            fit: BoxFit.cover,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.18,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.18,
+                                          )),
                                     ),
                                   ],
                                 ),
-                              ),
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => MeetingList(
-                                //       country: country,
-                                //     ),
-                                //   ),
-                                // );
-                              })));
-                },
-              );
-          }
-        },
-      ),
-    );
+                              )),
+                            )));
+                  });
+            }));
   }
 
   Widget _romanizedSong(BuildContext context) {
@@ -749,5 +689,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 duration: const Duration(milliseconds: 600),
                 reverseDuration: const Duration(milliseconds: 600),
                 opaque: false))));
+  }
+
+  Widget _trackRecording(BuildContext context) {
+    return Container(
+        // height: MediaQuery.of(context).size.height * 0.21,
+        padding: const EdgeInsets.only(left: 15),
+        child: GestureDetector(
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.35,
+              height: MediaQuery.of(context).size.height * 0.16,
+              // height: 140,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  image: DecorationImage(
+                      image: AssetImage('images/equalizer.jpg'),
+                      fit: BoxFit.cover)),
+            ),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TrackList()));
+            }));
   }
 }

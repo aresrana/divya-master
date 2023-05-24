@@ -44,7 +44,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                     .size
                     .width * 0.932,
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(75, 64, 54, 1),
+                  color: Color.fromRGBO(19, 19, 19, 1),
 
                   // color: Colors.brown[100]?.withOpacity(0.3), // added
                   //border: Border.all(color: Colors.orange, width: 5), // added

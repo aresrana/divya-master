@@ -4,10 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../componet/mini_player.dart';
-import '../componet/song_widget.dart';
 import '../model/song.dart';
+import '../widgets/song_widget.dart';
 
 class WorshipSongPage extends StatefulWidget {
   const WorshipSongPage({Key? key}) : super(key: key);

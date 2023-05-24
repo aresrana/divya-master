@@ -1,11 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../services/auth.dart';
 
 class HeaderPage extends StatefulWidget {
   @override
@@ -17,8 +21,7 @@ class _HeaderPage extends State<HeaderPage> {
   String email = "";
   final _picker = ImagePicker();
   File? _imageFile;
-
-
+  final User? user = Auth().currentUser;
   @override
   void initState() {
     super.initState();
@@ -50,15 +53,12 @@ class _HeaderPage extends State<HeaderPage> {
       await imageFile.writeAsBytes(bytes);
       setState(() {
         _imageFile = imageFile;
-
       });
       return _imageFile;
-
     } else {
       return null;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,23 +72,23 @@ class _HeaderPage extends State<HeaderPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                userName,
+                "Ashish Rana Magar",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
-                    color: Colors.grey),
+                    color: Colors.white),
               ),
               const SizedBox(height: 4),
               Text(
-                email,
+                '${user?.email}',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, color: Colors.black),
+                style: TextStyle(fontSize: 14, color: Colors.white),
               ),
             ],
           ),
-          Spacer(),
-          Icon(Icons.chevron_right_sharp),
+
+          // Icon(Icons.chevron_right_sharp,color: Colors.white,),
         ],
       ),
     );
@@ -100,13 +100,22 @@ class _HeaderPage extends State<HeaderPage> {
         Row(children: <Widget>[
           Container(
             height: 100,
-
-            child:CircleAvatar(
+            child: CircleAvatar(
               radius: 40,
-              backgroundImage: _imageFile != null ? FileImage(_imageFile!) : null,
-            )
-
-
+              backgroundColor: Colors.transparent,
+              backgroundImage: _imageFile != null || _imageFile?.path != null
+                  ? FadeInImage(
+                      placeholder: AssetImage('assets/placeholder_image.png'),
+                      // Replace with your own placeholder image asset
+                      image: _imageFile != null
+                          ? FileImage(_imageFile!) as ImageProvider<Object>
+                          : CachedNetworkImageProvider(_imageFile!.path),
+                    ).image
+                  : null,
+              child: _imageFile == null && _imageFile?.path == null
+                  ? Icon(Icons.person, size: 40) // Placeholder icon
+                  : null,
+            ),
           )
         ]),
         Positioned(
@@ -122,14 +131,14 @@ class _HeaderPage extends State<HeaderPage> {
                       CupertinoActionSheetAction(
                           child: Text('Camera'),
                           onPressed: () async {
+                            Navigator.pop(context);
                             takePhoto(ImageSource.camera);
-
                           }),
                       CupertinoActionSheetAction(
                           child: Text('Gallery'),
                           onPressed: () async {
+                            Navigator.pop(context);
                             takePhoto(ImageSource.gallery);
-
                           }),
                     ],
                   ),
@@ -142,7 +151,7 @@ class _HeaderPage extends State<HeaderPage> {
             },
             child: Icon(
               Icons.camera_alt,
-              color: Colors.blue,
+              color: Colors.white,
               size: 24.0,
             ),
           ),
@@ -174,7 +183,9 @@ class _HeaderPage extends State<HeaderPage> {
             IconButton(
               icon: Icon(Icons.camera, color: Colors.white),
               onPressed: () {
+                Navigator.pop(context);
                 takePhoto(ImageSource.camera);
+
               },
             ),
             IconButton(
@@ -183,7 +194,9 @@ class _HeaderPage extends State<HeaderPage> {
                 color: Color.fromRGBO(179, 179, 179, 100),
               ),
               onPressed: () {
+                Navigator.pop(context);
                 takePhoto(ImageSource.gallery);
+
               },
             ),
           ])

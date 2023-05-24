@@ -30,6 +30,15 @@
     <string>Allow access to read files from the document directory</string>
     <key>NSLocalNetworkUsageDescription</key>
     <string>This app uses local network resources to discover and connect to printers or other devices on your network.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Record audio to share with friends</string>
+<key>UISupportedInterfaceOrientations</key>
+<array>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+</array>
+<key>NSMicrophoneUsageDescription</key>
+<string>This app requires Mic permission to record the audio.</string>
 
 	<key>NSCameraUsageDescription</key>
 	<string>uses Cameras For Profile Pic Only</string>

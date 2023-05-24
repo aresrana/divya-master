@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-
-//import 'package:wiredash/wiredash.dart';
-
+import 'package:wiredash/wiredash.dart';
 import '../screens/login/register.dart';
 import '../widgets/icon_widget.dart';
 import 'account_page.dart';
@@ -28,27 +26,15 @@ class _SettingsPageState extends State<SettingsPage> {
     //gettingUsersData();
   }
 
-  // Future gettingUsersData() async {
-  //   await HelperFunctions.getUserEmailFromSF().then((value) {
-  //     setState(() {
-  //       email = value!;
-  //     });
-  //   });
-  //   await HelperFunctions.getUserNameFromSF().then((val) {
-  //     setState(() {
-  //       username = val!;
-  //     });
-  //   });
-  // }
-
-
   @override
   Widget build(BuildContext context) =>
       Scaffold(
         backgroundColor: Color.fromRGBO(18, 18, 18, 1),
         appBar: AppBar(
+
        automaticallyImplyLeading: false,
           toolbarHeight: 70,
+
           title: Text(
             'Settings',
             style: TextStyle(
@@ -57,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
               letterSpacing: 1.1,
             ),
           ),
-                backgroundColor: Colors.grey.shade900,
+                backgroundColor: Color.fromRGBO(18, 18, 18, 1),
           //You can make this transparent
           elevation: 0.0, //No shadow
         ),
@@ -101,9 +87,9 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
       );
 
-  Widget buildLogout() => SimpleSettingsTile(
-    title: 'Logout',
-    subtitle: '',
+  Widget buildLogout() => ListTile(
+    title: Text('Logout',style: TextStyle(color: Colors.white),),
+    subtitle: Text('Sign Out',style: TextStyle(color: Colors.white),),
     leading: IconWidget(icon: Icons.logout, color: Colors.blueAccent),
     onTap: () async {
       Navigator.pushAndRemoveUntil(
@@ -118,11 +104,11 @@ class _SettingsPageState extends State<SettingsPage> {
     },
   );
 
-  Widget buildDeleteAccount() => SimpleSettingsTile(
-      title: 'Delete Account',
+  Widget buildDeleteAccount() => ListTile(
+      title: Text('Delete Account',style: TextStyle(color: Colors.white),),
 
-      subtitle: '',
-      leading: IconWidget(icon: Icons.delete, color: Colors.white),
+      subtitle: Text('Loose Access',style: TextStyle(color: Colors.white),),
+      leading: IconWidget(icon: Icons.delete, color: Colors.red),
       onTap: () {
         showDialog(
             context: context,
@@ -150,7 +136,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                   content:
                                   Text("Your Account has been deleted")));
 
-                          //await authService.removeUser();
+                          // await authService.removeUser();
 
                         })
                   ]);
@@ -159,20 +145,20 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildSendFeedback(BuildContext context) =>
 
-      SimpleSettingsTile(
-          title: 'Send Feedback',
-          subtitle: '',
+ ListTile(
+          title: Text('Send Feedback',style: TextStyle(color: Colors.white),),
+          subtitle: Text('Suggestions',style: TextStyle(color: Colors.white),),
           leading: IconWidget(icon: Icons.thumb_up, color: Colors.purple),
           onTap: () {
-            //Wiredash.of(context).show(inheritMaterialTheme: true);
+            Wiredash.of(context).show(inheritMaterialTheme: true);
 
           });
 
 
   Widget buildBuyCofee(BuildContext context) =>
-      SimpleSettingsTile(
-        title: 'Buy Me a Coffee',
-        subtitle: 'A help to upgrade features in app',
+     ListTile(
+        title: Text('Buy Me a Coffee',style: TextStyle(color: Colors.white),),
+        subtitle: Text('A help to upgrade features in app',style: TextStyle(color: Colors.white),),
         leading: IconWidget(icon: Icons.live_help, color: Colors.teal),
         onTap: () {
           Navigator.push(context,

@@ -44,7 +44,6 @@ dependencies:
   carousel_slider:
   page_transition:
   swipe_deck:
-  custom_navigator: ^0.3.0
   provider: ^6.0.3
   flutter_neumorphic: ^3.2.0
   path_provider:
@@ -52,7 +51,7 @@ dependencies:
   dio:
   flutter_launcher_icons:
   printing:
-  permission_handler: ^8.1.6
+  permission_handler: ^10.2.0
   advance_pdf_viewer:
   shared_preferences:
   flutter_cache_manager:
@@ -62,12 +61,24 @@ dependencies:
   flutter_native_splash:
   epub_view: ^3.0.0
   image_picker:
-  flutter_image_compress: ^1.0.0
+  flutter_image_compress: ^2.0.1
   flutter_settings_screens: ^0.3.3-null-safety+2
   cached_network_image: ^3.2.3
   volume_controller:
   timeline_list: ^0.0.6
   timeline_tile:
+  flutter_sound: ^9.2.13
+  flutter_share: ^2.0.0
+  wave: ^0.2.2
+  audio_waveforms: ^1.0.4
+  file_picker: ^5.3.0
+  flip_card: ^0.7.0
+  wiredash: ^1.7.0
+  shimmer: ^3.0.0
+  get: ^4.6.5
+
+
+
 
 
 
@@ -124,13 +135,13 @@ flutter:
     - images/renew.jpg
     - images/dedication.jpg
     - images/saa.jpg
+    - images/Atirikta.jpg
     - assets/Romanized.epub
-    - images/USA.jpg
-    - images/nep.jpg
-    - images/UK.jpg
-    - images/ind.jpg
-    - images/nepi.jpg
-
+    - assets/track.mp3
+    - images/equalizer.jpg
+    - images/divya.png
+    - assets/language/nep.json
+    - assets/language/en.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

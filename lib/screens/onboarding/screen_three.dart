@@ -115,7 +115,7 @@ class OnboardingScreenThree extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => PlayerPage())),
+                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
                       child: Text(
                         'Skip',
                         style: TextStyle(
@@ -128,7 +128,7 @@ class OnboardingScreenThree extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: appPadding),
                     child: FloatingActionButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => PlayerPage())),
+                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
                       backgroundColor: white,
                       child: Icon(
                         Icons.done_rounded,

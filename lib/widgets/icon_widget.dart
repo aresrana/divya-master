@@ -12,6 +12,7 @@ class IconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
+
         padding: EdgeInsets.all(6),
         decoration: BoxDecoration(
           shape: BoxShape.circle,

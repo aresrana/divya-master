@@ -22,3 +22,6 @@
 //https://www.freepik.com/free-vector/shiny-rays-indian-flag-tones_831431.htm#query=dark%20india%20flag&position=4&from_view=search&track=ais
 //https://www.freepik.com/free-photo/map-nepal-polygonal-mesh-line-map-flag-map_24605047.htm#query=dark%20Nepal%20flag&position=11&from_view=search&track=ais
 //https://www.freepik.com/free-photo/mural-national-flag-england_28096543.htm#query=dark%20Uk%20flag&position=35&from_view=search&track=ais
+//https://www.freepik.com/free-photo/open-book-with-blue-sky-clouds-it_40792573.htm#query=God&position=1&from_view=search&track=sph
+//https://unsplash.com/photos/36mMEs3cKDE
+//https://www.freepik.com/free-vector/sound-wave-equalizer-vector-design-set_3791220.htm#query=music%20track&position=34&from_view=search&track=ais

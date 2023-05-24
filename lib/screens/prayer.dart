@@ -2,10 +2,9 @@ import 'package:divya/services/song_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import '../componet/mini_player.dart';
-import '../componet/song_widget.dart';
 import '../model/song.dart';
+import '../widgets/song_widget.dart';
 
 class PrayerPage extends StatefulWidget {
   const PrayerPage({Key? key}) : super(key: key);

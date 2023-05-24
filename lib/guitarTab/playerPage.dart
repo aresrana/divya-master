@@ -9,18 +9,18 @@ import '../componet/mini_player.dart';
 import '../screens/trial.dart';
 import '../services/song_provider.dart';
 
-class PlayerPage extends StatefulWidget {
+class BottomNavPage extends StatefulWidget {
 
 
-  const PlayerPage({
+  const BottomNavPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<PlayerPage> createState() => _PlayerPageState();
+  State<BottomNavPage> createState() => _BottomNavPageState();
 }
 
-class _PlayerPageState extends State<PlayerPage> {
+class _BottomNavPageState extends State<BottomNavPage> {
   late ValueNotifier<File?> _imageNotifier;
   File? _imageFile;
   bool isPlaying = false;
@@ -69,7 +69,16 @@ class _PlayerPageState extends State<PlayerPage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SongProvider>(context);
-    return SafeArea(
+    return WillPopScope(
+        onWillPop: ()
+        async {
+      return false;
+
+        }
+        , child:
+
+
+      SafeArea(
       top: false,
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -93,6 +102,6 @@ class _PlayerPageState extends State<PlayerPage> {
           // floatingActionButton: (widget.le!.isNotEmpty)? _playerControl(context):null,
         ),
       ),
-    );
+    ));
   }
 }

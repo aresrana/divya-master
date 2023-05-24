@@ -21,7 +21,7 @@ class _LoginCheckState extends State<LoginCheck> {
       stream: Auth().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return PlayerPage();
+          return BottomNavPage();
         } else {
           return const LoginPage();
         }

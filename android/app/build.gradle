@@ -36,6 +36,15 @@ if (keystorePropertiesFile.exists()) {
 android {
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    configurations {
+        implementation.exclude module: 'firebase-analytics-impl'
+    }
+
+
+        configurations {
+            implementation.exclude module: 'play-services-measurement'
+        }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -56,6 +65,7 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
+        targetSdkVersion 27
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -78,6 +88,7 @@ android {
 
     buildTypes {
         release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             crunchPngs false //or true
             debuggable false
             minifyEnabled false
@@ -93,15 +104,48 @@ android {
 flutter {
     source '../..'
 }
+configurations.all {
+    resolutionStrategy {
+        force 'com.google.android.gms:play-services-measurement:21.2.2'
+        force 'com.google.android.gms:play-services-measurement-api:17.0.0'
+    }
+}
+configurations {
+    all*.exclude group: 'com.google.firebase', module: 'firebase-measurement-connector-impl'
+    all*.exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
+}
+
 
 dependencies {
+    implementation 'com.android.support:support-annotations:27.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:30.3.1')
-    implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:support-core-utils:28.0.0'
     implementation "androidx.core:core:1.8.0"
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    implementation('com.google.firebase:firebase-measurement-connector-impl:17.0.5') {
+        exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
+    }
+    implementation('com.google.firebase:firebase-analytics') {
+        exclude module: 'play-services-measurement-api'
+    }
+
+    implementation('com.google.firebase:firebase-analytics:16.3.0') {
+        exclude group: 'com.google.android.gms', module: 'play-services-measurement'
+        exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
+    }
+    dependencies {
+        implementation ('com.google.android.gms:play-services-measurement:21.2.2') {
+            exclude group: 'com.google.firebase', module: 'firebase-analytics-impl'
+        }
+    }
+    implementation ('com.google.firebase:firebase-analytics') {
+        exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
+
+    }
+
+
 }
