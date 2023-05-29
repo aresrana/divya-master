@@ -1,85 +1,104 @@
 import 'package:divya/controllers/language_controller.dart';
+import 'package:divya/settings/settings_page.dart';
 import 'package:divya/widgets/language_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+
+import '../../componet/mini_player.dart';
+import '../../services/song_provider.dart';
 
 class LanguageScreen extends StatelessWidget {
   const LanguageScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: SafeArea(
-      child:
-          GetBuilder<LocalizationController>(builder: (localizationController) {
-        return Column(
-          children: [
-            Expanded(
-                child: Center(
-                    child: Scrollbar(
-                        child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.all(5),
-              child: Center(
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: Image.asset(
-                        "images/praise.jpg",
-                        width: 120,
-                      )),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Center(
-                        child: Image.asset(
-                          "images/gospel.jpg",
-                          width: 140,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            'Select_Language'.tr,
-                          )),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
+    final provider = context.watch<SongProvider>();
+    return Scaffold(
+        backgroundColor: Color.fromRGBO(18, 18, 18, 1),
+        appBar: AppBar(
+          title: Text("Account".tr),
+          toolbarHeight: 40,
+          elevation: 0,
+          backgroundColor: Colors.grey.withOpacity(0.05),
+          leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                color: Colors.white,
+                size: 30,
+              ),
+              onPressed: () => Navigator.pop(context)
+              // Navigator.push(
+              // context,
+              // MaterialPageRoute(
+              //     builder: (context) =>
+              //         SettingsPage())), // pop the current route when the back button is pressed
+              ),
+        ),
+        body: SafeArea(child: GetBuilder<LocalizationController>(
+            builder: (localizationController) {
+          return Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.1,
+                color: Color.fromRGBO(18, 18, 18, 1),
+                child: Card(
+                  color: Color.fromRGBO(18, 18, 18, 1),
+                  child:
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Select_Language'.tr,
+                              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          itemCount: 2,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (BuildContext context, int index) =>
-                              LanguageWidget(
-                                  languageModel:
-                                      localizationController.languages[index],
-                                  localizationController:
-                                      localizationController,
-                                  index: index)),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text('you_can_change_language'.tr),
-                    ],
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 1,
+                              mainAxisSpacing: 20,
+                              // Adjust the vertical spacing between items
+                              crossAxisSpacing:
+                                  0, // Adjust the horizontal spacing between items
+                            ),
+                            itemCount: 2,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) =>
+                                LanguageWidget(
+                              languageModel:
+                                  localizationController.languages[index],
+                              localizationController: localizationController,
+                              index: index,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ))))
-          ],
-        );
-      }),
-    ));
+            ],
+          );
+        })),
+      floatingActionButton: provider.playingSong != null ? MiniPlayer() : null ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, //
+
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 import '../screens/login/register.dart';
 import '../widgets/icon_widget.dart';
@@ -36,7 +37,7 @@ class _SettingsPageState extends State<SettingsPage> {
           toolbarHeight: 70,
 
           title: Text(
-            'Settings',
+            'Settings'.tr,
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
@@ -56,8 +57,8 @@ class _SettingsPageState extends State<SettingsPage> {
               HeaderPage(),
               const SizedBox(height: 32),
               SettingsGroup(
-                title: 'GENERAL',
-                titleTextStyle: TextStyle(color: Colors.white),
+                title: 'GENERAL'.tr,
+                titleTextStyle: TextStyle(color: Colors.white,fontSize: 16),
                 children: <Widget>[
                   AccountPage(),
                   NotificationsPage(),
@@ -67,16 +68,16 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const SizedBox(height: 32),
               SettingsGroup(
-                  title: 'FEEDBACK',
-                  titleTextStyle: TextStyle(color: Colors.white),
+                  title: 'FEEDBACK'.tr,
+                  titleTextStyle: TextStyle(color: Colors.white,fontSize:16),
                   children: <Widget>[
                     const SizedBox(height: 8),
                     buildSendFeedback(context),
                   ]),
               const SizedBox(height: 32),
               SettingsGroup(
-                title: 'Buy Me A Coffee',
-                titleTextStyle: TextStyle(color: Colors.white),
+                title: 'support'.tr,
+                titleTextStyle: TextStyle(color: Colors.white,fontSize:16),
                 children: <Widget>[
                   const SizedBox(height: 8),
                   buildBuyCofee(context),
@@ -88,8 +89,8 @@ class _SettingsPageState extends State<SettingsPage> {
       );
 
   Widget buildLogout() => ListTile(
-    title: Text('Logout',style: TextStyle(color: Colors.white),),
-    subtitle: Text('Sign Out',style: TextStyle(color: Colors.white),),
+    title: Text('logout'.tr,style: TextStyle(color: Colors.white),),
+    subtitle: Text('signout'.tr,style: TextStyle(color: Colors.white),),
     leading: IconWidget(icon: Icons.logout, color: Colors.blueAccent),
     onTap: () async {
       Navigator.pushAndRemoveUntil(
@@ -105,9 +106,9 @@ class _SettingsPageState extends State<SettingsPage> {
   );
 
   Widget buildDeleteAccount() => ListTile(
-      title: Text('Delete Account',style: TextStyle(color: Colors.white),),
+      title: Text('Delete_Account'.tr,style: TextStyle(color: Colors.white),),
 
-      subtitle: Text('Loose Access',style: TextStyle(color: Colors.white),),
+      subtitle: Text('loose'.tr,style: TextStyle(color: Colors.white),),
       leading: IconWidget(icon: Icons.delete, color: Colors.red),
       onTap: () {
         showDialog(
@@ -146,8 +147,8 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget buildSendFeedback(BuildContext context) =>
 
  ListTile(
-          title: Text('Send Feedback',style: TextStyle(color: Colors.white),),
-          subtitle: Text('Suggestions',style: TextStyle(color: Colors.white),),
+          title: Text('Send_Feedback'.tr,style: TextStyle(color: Colors.white),),
+          subtitle: Text('suggestions'.tr,style: TextStyle(color: Colors.white),),
           leading: IconWidget(icon: Icons.thumb_up, color: Colors.purple),
           onTap: () {
             Wiredash.of(context).show(inheritMaterialTheme: true);
@@ -157,8 +158,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildBuyCofee(BuildContext context) =>
      ListTile(
-        title: Text('Buy Me a Coffee',style: TextStyle(color: Colors.white),),
-        subtitle: Text('A help to upgrade features in app',style: TextStyle(color: Colors.white),),
+        title: Text('support'.tr,style: TextStyle(color: Colors.white),),
+        subtitle: Text('help'.tr,style: TextStyle(color: Colors.white),),
         leading: IconWidget(icon: Icons.live_help, color: Colors.teal),
         onTap: () {
           Navigator.push(context,

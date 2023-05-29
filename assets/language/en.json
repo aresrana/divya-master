@@ -1,6 +1,8 @@
 {
-  "Nepali": "Nepali",
 
+
+  "English": "English",
+  "Nepali": "नेपाली",
   "Praise_the_Lord": "PRAISE THE LORD",
   "Siyonkaa_Geetharoo": "Siyonkaa Geetharoo",
   "Worship": "Worship",
@@ -14,10 +16,35 @@
   "Gospel": "Gospel",
   "Resurrection": "Resurrection",
   "Rapture": "Rapture",
-  "Death": "Daeath",
+  "Death": "Death",
   "New_Year": "New Year",
   "Additional": "Additional",
   "you_can_change_language": "You can change your language",
-  "Select_Language" : "Choose Language"
+  "Select_Language" : "Choose Language",
+  "Account": "Account",
+  "_newsletter": "Newsletters",
+  "_newsUpdate": "No newsletters available.",
+  "Account_Settings": "Account",
+  "Settings": "Settings",
+  "PSL": "Privacy,Security,Language",
+  "Notifications": "Notifcations",
+  "Newsletters": "Newsletters",
+  "logout": "Log Out",
+  "signout": "Sign Out",
+  "Delete_Account": "Delete Account",
+  "loose": "You'll lose access to app",
+  "GENERAL": "GENERAL",
+  "FEEDBACK": "FEEDBACK",
+  "Send_Feedback": "Send Feedback",
+  "suggestions": "Suggestions,Advices",
+  "support": "Support",
+  "buy": "Buy Me a Coffee",
+  "help": "A help to upgrade features in app",
+  "Meetings" : "Meetings",
+  "Holy Convocation": "Holy Convocation",
+  "Special Meeting": "Special Meeting",
+  "Youth Meeting": "Youth Meeting"
+
+
 
 }

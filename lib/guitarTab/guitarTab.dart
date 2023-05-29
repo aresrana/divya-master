@@ -1,401 +1,253 @@
-// import 'package:audioplayers/audioplayers.dart';
-// import 'package:flutter/material.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-//
-// class DashBoards extends StatefulWidget {
-//   final String url;
-//   final String le;
-//   final String music;
-//   const DashBoards(
-//       {Key? key, required this.url, required this.le, required this.music})
-//       : super(key: key);
-//
-//   @override
-//   _DashBoardsState createState() => _DashBoardsState(url, le, music);
-// }
-//
-// class _DashBoardsState extends State<DashBoards> {
-//   List<String> categories = [
-//     "Popular",
-//     "Recommended",
-//     "Special Order",
-//     "Fresh Juice",
-//     "Trending",
-//     "Customize"
-//   ];
-//   int currentCategoryIndex = 0;
-//   FocusNode focusNode = FocusNode();
-//   late final String url;
-//   late final String music;
-//   late final String le;
-//   final audioPlayer = AudioPlayer();
-//   bool isPlaying = false;
-//   Duration duration = Duration.zero;
-//   Duration position = Duration.zero;
-//   bool _isLoading = false;
-//   _DashBoardsState(url, le, music);
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     setAudio();
-//
-//     audioPlayer.onPlayerStateChanged.listen((state) {
-//       setState(() {
-//         isPlaying = state == PlayerState.PLAYING;
-//       });
-//     });
-//
-//     audioPlayer.onDurationChanged.listen((newDuration) {
-//       setState(() {
-//         duration = newDuration;
-//       });
-//     });// import 'package:audioplayers/audioplayers.dart';
-// // import 'package:flutter/material.dart';
-// // import 'package:webview_flutter/webview_flutter.dart';
-// //
-// // class DashBoards extends StatefulWidget {
-// //   final String url;
-// //   final String le;
-// //   final String music;
-// //   const DashBoards(
-// //       {Key? key, required this.url, required this.le, required this.music})
-// //       : super(key: key);
-// //
-// //   @override
-// //   _DashBoardsState createState() => _DashBoardsState(url, le, music);
-// // }
-// //
-// // class _DashBoardsState extends State<DashBoards> {
-// //   List<String> categories = [
-// //     "Popular",
-// //     "Recommended",
-// //     "Special Order",
-// //     "Fresh Juice",
-// //     "Trending",
-// //     "Customize"
-// //   ];
-// //   int currentCategoryIndex = 0;
-// //   FocusNode focusNode = FocusNode();
-// //   late final String url;
-// //   late final String music;
-// //   late final String le;
-// //   final audioPlayer = AudioPlayer();
-// //   bool isPlaying = false;
-// //   Duration duration = Duration.zero;
-// //   Duration position = Duration.zero;
-// //   bool _isLoading = false;
-// //   _DashBoardsState(url, le, music);
-// //
-// //   @override
-// //   void initState() {
-// //     super.initState();
-// //     setAudio();
-// //
-// //     audioPlayer.onPlayerStateChanged.listen((state) {
-// //       setState(() {
-// //         isPlaying = state == PlayerState.PLAYING;
-// //       });
-// //     });
-// //
-// //     audioPlayer.onDurationChanged.listen((newDuration) {
-// //       setState(() {
-// //         duration = newDuration;
-// //       });
-// //     });
-// //
-// //     audioPlayer.onAudioPositionChanged.listen((newPosition) {
-// //       setState(() {
-// //         position = newPosition;
-// //       });
-// //     });
-// //   }
-// //
-// //   Future setAudio() async {
-// //     audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-// //     audioPlayer.setUrl(widget.music);
-// //   }
-// //
-// //   @override
-// //   void dispose() {
-// //     audioPlayer.dispose();
-// //     super.dispose();
-// //   }
-// //
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       //backgroundColor: Colors.white60,
-// //       endDrawerEnableOpenDragGesture: false,
-// //       appBar: AppBar(
-// //         title: Text(widget.le),
-// //         backgroundColor: Colors.green,
-// //       ),
-// //       body: Column(
-// //         children: [
-// //           _buildCategories(),
-// //           Expanded(
-// //               child: WebView(
-// //             javascriptMode: JavascriptMode.unrestricted,
-// //             initialUrl: widget.url,
-// //           )),
-// //           Container(
-// //               color: Colors.transparent,
-// //               child: Slider(
-// //                 activeColor: Colors.black,
-// //                 inactiveColor: Colors.red,
-// //                 thumbColor: Colors.white,
-// //                 min: 0,
-// //                 max: duration.inSeconds.toDouble(),
-// //                 value: position.inSeconds.toDouble(),
-// //                 onChanged: (value) async {
-// //                   final position = Duration(seconds: value.toInt());
-// //                   await audioPlayer.seek(position);
-// //                   audioPlayer.resume();
-// //                 },
-// //               )),
-// //           Container(
-// //               color: Colors.transparent,
-// //               padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-// //               child: Row(
-// //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// //                 children: [
-// //                   Text(formatTime(position)),
-// //                   CircleAvatar(
-// //                     backgroundColor: Colors.black,
-// //                     radius: 20,
-// //                     child: IconButton(
-// //                       icon: Icon(
-// //                         isPlaying ? Icons.pause : Icons.play_arrow_rounded,
-// //                         color: Colors.white,
-// //                       ),
-// //                       onPressed: () async {
-// //                         if (isPlaying) {
-// //                           await audioPlayer.pause();
-// //                         } else {
-// //                           await audioPlayer.resume();
-// //                         }
-// //                       },
-// //                     ),
-// //                   ),
-// //                   Text(formatTime(duration - position)),
-// //                 ],
-// //               )),
-// //         ],
-// //       ),
-// //     );
-// //   }
-// //
-// //   Widget _buildCategories() {
-// //     return Padding(
-// //         padding: const EdgeInsets.symmetric(vertical: 20),
-// //         child: SizedBox(
-// //           height: 30,
-// //           child: ListView.builder(
-// //               itemCount: categories.length,
-// //               shrinkWrap: true,
-// //               scrollDirection: Axis.horizontal,
-// //               itemBuilder: (context, index) {
-// //                 return currentCategoryIndex == index
-// //                     ? _buildCurrentCategory(index)
-// //                     : _buildCategory(index);
-// //               }),
-// //         ));
-// //   }
-// //
-// //   Widget _buildCurrentCategory(int index) {
-// //     return Container(
-// //       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-// //       margin: const EdgeInsets.symmetric(horizontal: 4),
-// //       decoration: BoxDecoration(
-// //         color: Colors.black,
-// //         border: Border.all(),
-// //         borderRadius: const BorderRadius.all(Radius.circular(15)),
-// //       ),
-// //       child: Text(
-// //         categories.elementAt(index),
-// //         style: const TextStyle(fontSize: 12, color: Colors.white),
-// //       ),
-// //     );
-// //   }
-// //
-// //   Widget _buildCategory(index) {
-// //     return InkWell(
-// //       onTap: () {
-// //         setState(() {
-// //           currentCategoryIndex = index;
-// //         });
-// //       },
-// //       child: Container(
-// //         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-// //         margin: const EdgeInsets.symmetric(horizontal: 4),
-// //         decoration: BoxDecoration(
-// //           border: Border.all(),
-// //           borderRadius: const BorderRadius.all(Radius.circular(15)),
-// //         ),
-// //         child: Text(
-// //           categories.elementAt(index),
-// //           style: const TextStyle(
-// //             fontSize: 12,
-// //           ),
-// //         ),
-// //       ),
-// //     );
-// //   }
-// //
-// //   String formatTime(Duration duration) {
-// //     String twoDigits(int n) => n.toString().padLeft(2, '0');
-// //     final hours = twoDigits(duration.inHours);
-// //     final minutes = twoDigits(duration.inMinutes.remainder(60));
-// //     final seconds = twoDigits(duration.inSeconds.remainder(60));
-// //     return [if (duration.inHours > 0) hours, minutes, seconds].join(':');
-// //   }
-// // }
-//
-//     audioPlayer.onAudioPositionChanged.listen((newPosition) {
-//       setState(() {
-//         position = newPosition;
-//       });
-//     });
-//   }
-//
-//   Future setAudio() async {
-//     audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-//     audioPlayer.setUrl(widget.music);
-//   }
-//
-//   @override
-//   void dispose() {
-//     audioPlayer.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       //backgroundColor: Colors.white60,
-//       endDrawerEnableOpenDragGesture: false,
-//       appBar: AppBar(
-//         title: Text(widget.le),
-//         backgroundColor: Colors.green,
-//       ),
-//       body: Column(
-//         children: [
-//           _buildCategories(),
-//           Expanded(
-//               child: WebView(
-//             javascriptMode: JavascriptMode.unrestricted,
-//             initialUrl: widget.url,
-//           )),
-//           Container(
-//               color: Colors.transparent,
-//               child: Slider(
-//                 activeColor: Colors.black,
-//                 inactiveColor: Colors.red,
-//                 thumbColor: Colors.white,
-//                 min: 0,
-//                 max: duration.inSeconds.toDouble(),
-//                 value: position.inSeconds.toDouble(),
-//                 onChanged: (value) async {
-//                   final position = Duration(seconds: value.toInt());
-//                   await audioPlayer.seek(position);
-//                   audioPlayer.resume();
-//                 },
-//               )),
-//           Container(
-//               color: Colors.transparent,
-//               padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(formatTime(position)),
-//                   CircleAvatar(
-//                     backgroundColor: Colors.black,
-//                     radius: 20,
-//                     child: IconButton(
-//                       icon: Icon(
-//                         isPlaying ? Icons.pause : Icons.play_arrow_rounded,
-//                         color: Colors.white,
-//                       ),
-//                       onPressed: () async {
-//                         if (isPlaying) {
-//                           await audioPlayer.pause();
-//                         } else {
-//                           await audioPlayer.resume();
-//                         }
-//                       },
-//                     ),
-//                   ),
-//                   Text(formatTime(duration - position)),
-//                 ],
-//               )),
-//         ],
-//       ),
-//     );
-//   }
-//
-//   Widget _buildCategories() {
-//     return Padding(
-//         padding: const EdgeInsets.symmetric(vertical: 20),
-//         child: SizedBox(
-//           height: 30,
-//           child: ListView.builder(
-//               itemCount: categories.length,
-//               shrinkWrap: true,
-//               scrollDirection: Axis.horizontal,
-//               itemBuilder: (context, index) {
-//                 return currentCategoryIndex == index
-//                     ? _buildCurrentCategory(index)
-//                     : _buildCategory(index);
-//               }),
-//         ));
-//   }
-//
-//   Widget _buildCurrentCategory(int index) {
-//     return Container(
-//       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-//       margin: const EdgeInsets.symmetric(horizontal: 4),
-//       decoration: BoxDecoration(
-//         color: Colors.black,
-//         border: Border.all(),
-//         borderRadius: const BorderRadius.all(Radius.circular(15)),
-//       ),
-//       child: Text(
-//         categories.elementAt(index),
-//         style: const TextStyle(fontSize: 12, color: Colors.white),
-//       ),
-//     );
-//   }
-//
-//   Widget _buildCategory(index) {
-//     return InkWell(
-//       onTap: () {
-//         setState(() {
-//           currentCategoryIndex = index;
-//         });
-//       },
-//       child: Container(
-//         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-//         margin: const EdgeInsets.symmetric(horizontal: 4),
-//         decoration: BoxDecoration(
-//           border: Border.all(),
-//           borderRadius: const BorderRadius.all(Radius.circular(15)),
-//         ),
-//         child: Text(
-//           categories.elementAt(index),
-//           style: const TextStyle(
-//             fontSize: 12,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-//
-//   String formatTime(Duration duration) {
-//     String twoDigits(int n) => n.toString().padLeft(2, '0');
-//     final hours = twoDigits(duration.inHours);
-//     final minutes = twoDigits(duration.inMinutes.remainder(60));
-//     final seconds = twoDigits(duration.inSeconds.remainder(60));
-//     return [if (duration.inHours > 0) hours, minutes, seconds].join(':');
-//   }
-// }
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter/services.dart';
+import 'package:equalizer_flutter/equalizer_flutter.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  bool enableCustomEQ = false;
+
+  @override
+  void initState() {
+    super.initState();
+    EqualizerFlutter.init(0);
+  }
+
+  @override
+  void dispose() {
+    EqualizerFlutter.release();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Equalizer example'),
+        ),
+        body: ListView(
+          children: [
+            SizedBox(height: 10.0),
+            Center(
+              child: Builder(
+                builder: (context) {
+                  return ElevatedButton.icon(
+                    icon: Icon(Icons.equalizer),
+                    label: Text('Open device equalizer'),
+
+                    onPressed: () async {
+                      try {
+                        await EqualizerFlutter.open(0);
+                      } on PlatformException catch (e) {
+                        final snackBar = SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          content: Text('${e.message}\n${e.details}'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              color: Colors.grey.withOpacity(0.1),
+              child: SwitchListTile(
+                title: Text('Custom Equalizer'),
+                value: enableCustomEQ,
+                onChanged: (value) {
+                  EqualizerFlutter.setEnabled(value);
+                  setState(() {
+                    enableCustomEQ = value;
+                  });
+                },
+              ),
+            ),
+            SizedBox(height: 20,),
+            FutureBuilder<List<int>>(
+              future: EqualizerFlutter.getBandLevelRange(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  final data = snapshot.data;
+                  if (data != null) {
+                    return CustomEQ(enableCustomEQ, data);
+                  } else {
+                    // Handle the case where snapshot.data is null
+                    return Text('Data is null');
+                  }
+                } else {
+                  return CircularProgressIndicator();
+                }
+              },
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomEQ extends StatefulWidget {
+  const CustomEQ(this.enabled, this.bandLevelRange);
+
+  final bool enabled;
+  final List<int> bandLevelRange;
+
+  @override
+  _CustomEQState createState() => _CustomEQState();
+}
+
+class _CustomEQState extends State<CustomEQ> {
+  late double min, max;
+  String? _selectedValue;
+  late Future<List<String>> fetchPresets;
+
+  @override
+  void initState() {
+    super.initState();
+    min = widget.bandLevelRange[0].toDouble();
+    max = widget.bandLevelRange[1].toDouble();
+    fetchPresets = EqualizerFlutter.getPresetNames();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int bandId = 0;
+
+    return FutureBuilder<List<int>>(
+      future: EqualizerFlutter.getCenterBandFreqs(),
+      builder: (context, snapshot) {
+        return snapshot.connectionState == ConnectionState.done
+            ? snapshot.hasData
+            ? Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: snapshot.data!
+                  .map((freq) => _buildSliderBand(freq, bandId))
+                  .toList(),
+            ),
+            Divider(),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: _buildPresets(),
+            ),
+          ],
+        )
+            : Text('Data is null')
+            : CircularProgressIndicator();
+
+      },
+    );
+  }
+
+  Widget _buildSliderBand(int freq, int bandId) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            height: 250,
+            child: FutureBuilder<int>(
+              future: EqualizerFlutter.getBandLevel(bandId),
+              builder: (context, snapshot) {
+                var data = snapshot.data?.toDouble() ?? 0.0;
+                return RotatedBox(
+                  quarterTurns: 1,
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        trackHeight: 1,
+                        trackShape: SliderCustomTrackShape()
+                    ),
+                    child: Center(
+                      child: Slider(
+                        min: min,
+                        max: max,
+                        value: data,
+                        onChanged: (lowerValue) {
+                          EqualizerFlutter.setBandLevel(bandId, lowerValue.toInt());
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          Text('${freq ~/ 1000} Hz'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPresets() {
+    return FutureBuilder<List<String>>(
+      future: fetchPresets,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final presets = snapshot.data;
+          if (presets!.isEmpty) return Text('No presets available!');
+          return DropdownButtonFormField(
+            decoration: InputDecoration(
+              labelText: 'Available Presets',
+              border: OutlineInputBorder(),
+            ),
+            value: _selectedValue,
+            onChanged: widget.enabled
+                ? (String? value) {
+              EqualizerFlutter.setPreset(value!);
+              setState(() {
+                _selectedValue = value;
+              });
+            }
+                : null,
+            items: presets.map((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          );
+        } else if (snapshot.hasError)
+          return Text(snapshot.error.toString());
+        else
+          return CircularProgressIndicator();
+      },
+    );
+  }
+
+}
+
+class SliderCustomTrackShape extends RoundedRectSliderTrackShape {
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final double? trackHeight = sliderTheme.trackHeight;
+    final double trackLeft = offset.dx;
+    final double trackTop = (parentBox.size.height) / 2;
+    final double trackWidth =  230;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight!);
+  }
+}

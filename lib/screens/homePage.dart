@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../model/song.dart';
 import '../services/auth.dart';
 import 'Meetings/meetings.dart';
@@ -111,9 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children: const [
+                  child: Row(children:  [
                     SizedBox(width: 5),
-                    Text('सियोनका गीतहरू',
+                    Text('सियोनका गीतहरू'.tr,
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -126,9 +127,9 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 5),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children: const [
+                  child: Row(children:  [
                     SizedBox(width: 10),
-                    Text('सभाका गीतहरू',
+                    Text('सभाका गीतहरू'.tr,
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -141,9 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 20),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children: const [
+                  child: Row(children:  [
                     SizedBox(width: 10),
-                    Text('Romanized Songs',
+                    Text('Romanized Songs'.tr,
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -154,9 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 20),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children: const [
+                  child: Row(children:  [
                     SizedBox(width: 10),
-                    Text('Recording Tracks',
+                    Text('Recording Tracks'.tr,
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
@@ -197,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _songs(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.21,
+        height: MediaQuery.of(context).size.height * 0.22,
         padding: const EdgeInsets.only(left: 5),
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -223,9 +224,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "worship(आराधना)",
+                "Worship".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -250,9 +251,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "praise(प्रशंसा)",
+                "Praise".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -277,9 +278,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "pray(प्रार्थना)",
+                "Pray".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               ),
             ]),
             SizedBox(
@@ -304,9 +305,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "promise(प्रतिज्ञा)",
+                "Promise".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -333,9 +334,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "dedication(समर्पण)",
+              "Dedication".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -360,9 +361,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "witness(साक्षी)",
+                "Witness".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -389,9 +390,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "Christian life(मसीही जीवन)",
+                "Christian_Life".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -417,9 +418,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "Lord's call(मसीही आह्वान )",
+                "Christ's_Call".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -444,9 +445,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "gospel(सुसमाचार)",
+                "Gospel".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -473,9 +474,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "resurrection(पुनरूत्थान)",
+                "Resurrection".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -500,9 +501,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "rapture(दोस्रो आगमन)",
+                "Rapture".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -527,9 +528,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "death(मृत्यु)",
+                "Death".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -554,9 +555,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "New Year(नयाँ वर्ष )",
+                "New_Year".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -581,9 +582,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-                "Additional(अतिरिक्त)",
+                "Additional".tr,
                 style: TextStyle(
-                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
           ],
@@ -620,10 +621,20 @@ class _MyHomePageState extends State<MyHomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MyMeetingScreen(
-                                    snapshot.data!.docs[index].id,
-                                    myObjects[index].country),
-                              ));
+                                builder: (context) {
+                                  if (snapshot.hasData) {
+                                    final meetingDocuments = snapshot.data!.docs;
+                                    if (index < meetingDocuments.length) {
+                                      return MyMeetingScreen(
+                                        meetingDocuments[index].id,
+                                        myObjects[index].country,
+                                      );
+                                    }
+                                  }
+                                  return Container(); // Replace with your desired fallback widget or handle the null case accordingly
+                                },
+                              )
+                          );
                         },
                         child: Padding(
                             padding: EdgeInsets.only(right: 10.0),
@@ -650,6 +661,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                           child: CachedNetworkImage(
                                             imageUrl: myObjects[index].image,
                                             fit: BoxFit.cover,
+                                            placeholder: (BuildContext context,
+                                                String url) =>
+                                                Shimmer.fromColors(
+                                                  child: Container(
+                                                    color: Colors
+                                                        .white, // Placeholder color
+                                                  ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor: Colors.grey[100]!,
+                                                ),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .height *

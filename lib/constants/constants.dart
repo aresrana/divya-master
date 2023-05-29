@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../model/language_model.dart';
 
@@ -17,8 +18,8 @@ class AppConstants{
 
   static List<LanguageModel> languages =[
 
-    LanguageModel(languageName: 'English', languageCode: 'en', countryCode: 'US'),
-    LanguageModel(languageName: 'Nepali', languageCode: 'nep', countryCode: 'NP'),
+    LanguageModel(languageName: 'English'.tr, languageCode: 'en', countryCode: 'US'),
+    LanguageModel(languageName: 'Nepali'.tr, languageCode: 'nep', countryCode: 'NP'),
 
 
   ];

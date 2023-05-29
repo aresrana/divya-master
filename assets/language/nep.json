@@ -1,5 +1,6 @@
 {
   "Nepali": "नेपाली",
+  "English": "English",
   "Praise_the_Lord": " जयमसिही कि",
   "Siyonkaa_Geetharoo": "सियोनका गीतहरू",
   "Worship": "आराधना",
@@ -17,6 +18,28 @@
   "New_Year": "नयाँ वर्ष",
   "Additional": "अतिरिक्त",
   "you_can_change_language": "भाषा परिवर्तन गर्नसक्नुहुनेछ",
-  "Select_Language" : "भाषा छान्नुहोस्"
-
+  "Select_Language": "भाषा छान्नुहोस्",
+  "Account": "खाता",
+  "_newsletter": "सूचनापत्रहरू",
+  "_newsUpdate": "सूचनापत्रहरू उपलब्ध छैनन् । ",
+  "Account_Settings": "खाता",
+  "Settings": "सेटिङ्ग",
+  "PSL": "गोपनीयता,सुरक्षा,भाषा",
+  "Notifications": "अधिसूचनाहरू",
+  "Newsletters": "सूचनापत्रहरू",
+  "logout": "लग आउट",
+  "signout": "साइन आउट",
+  "Delete_Account": "खाता हटाउनुहोस्",
+  "loose": "एपका सुविधाहरू गुमाउनुहुनेछ",
+  "GENERAL": "सामान्य",
+  "FEEDBACK": "प्रतिक्रिया",
+  "Send_Feedback": "प्रतिक्रियाहरू पठाउनुहोस्",
+  "suggestions": "सुझाव,सल्लाहहरू",
+  "support": "समर्थन",
+  "buy": "कफी किनिदिनुहोस्",
+  "help": "एपलाई थप स्तरीय बनाउनको निम्ति सहयोग",
+  "Meetings": "सेवकाईहरू",
+  "Holy Convocation": "पवित्र महासभा",
+  "Special Meeting": "विशेष सभा",
+  "Youth Meeting": "युवा शिविर"
 }
