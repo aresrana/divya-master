@@ -1,9 +1,7 @@
 import 'dart:io';
-import 'package:divya/screens/trackRecording/views/recorded_list_view.dart';
-import 'package:divya/screens/trackRecording/views/recorder_view.dart';
+
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-
 
 class RecorderHomeView extends StatefulWidget {
   final String _title;
@@ -42,55 +40,53 @@ class _RecorderHomeViewState extends State<RecorderHomeView> {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-      MediaQuery(
+    return MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-        child:  DefaultTabController(
-            length: 2,
-            child: Scaffold(
-              appBar: AppBar(
-                bottom: TabBar(
-                  tabs: [
-                    Tab(text: 'Tab 1'),
-                    Tab(text: 'Tab 2'),
-                  ],
-                ),
-              ),
-              body: TabBarView(
-                children: [
-                  RecorderHomeView(title: 'Tab 1'),
-                  RecorderHomeView(title: 'Tab 2'),
+        child: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              bottom: TabBar(
+                tabs: [
+                  Tab(text: 'Tab 1'),
+                  Tab(text: 'Tab 2'),
                 ],
               ),
             ),
-          )
+            body: TabBarView(
+              children: [
+                RecorderHomeView(title: 'Tab 1'),
+                RecorderHomeView(title: 'Tab 2'),
+              ],
+            ),
+          ),
+        )
 
-    // child: Scaffold(
-    //   appBar: AppBar(
-    //     title: Text(widget._title),
-    //   ),
-    //   body:
-    //
-    //   Column(
-    //     children: [
-    //       Expanded(
-    //         flex: 2,
-    //         child: RecordListView(
-    //           records: records,
-    //         ),
-    //       ),
-    //       Expanded(
-    //         flex: 1,
-    //         child: RecorderView(
-    //           onSaved: _onRecordComplete,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // )
+        // child: Scaffold(
+        //   appBar: AppBar(
+        //     title: Text(widget._title),
+        //   ),
+        //   body:
+        //
+        //   Column(
+        //     children: [
+        //       Expanded(
+        //         flex: 2,
+        //         child: RecordListView(
+        //           records: records,
+        //         ),
+        //       ),
+        //       Expanded(
+        //         flex: 1,
+        //         child: RecorderView(
+        //           onSaved: _onRecordComplete,
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // )
 
-      );
+        );
   }
 
   _onRecordComplete() {

@@ -1,7 +1,8 @@
 import 'dart:ui';
+
 import 'package:divya/constants/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/language_model.dart';
 
@@ -32,36 +33,32 @@ class LocalizationController extends GetxController implements GetxService {
         sharedPreferences.getString(AppConstants.COUNTRY_CODE) ??
             AppConstants.languages[0].countryCode);
 
-    for (int index=0; index < AppConstants.languages.length; index++){
-
+    for (int index = 0; index < AppConstants.languages.length; index++) {
       if (AppConstants.languages[index].languageCode == _locale.languageCode) {
-  _selectedIndex = index;
-  break;
-
+        _selectedIndex = index;
+        break;
+      }
     }
-
-    }
-    _languages=[];
+    _languages = [];
     _languages.addAll(AppConstants.languages);
     update();
   }
-  void setLanguage(Locale locale){
+
+  void setLanguage(Locale locale) {
     Get.updateLocale(locale);
     _locale = locale;
     saveLanguage(_locale);
     update();
-
   }
 
-  void setSelectIndex(int index){
+  void setSelectIndex(int index) {
     _selectedIndex = index;
     update();
+  }
 
-      }
-void saveLanguage(Locale locale)async {
-    sharedPreferences.setString(AppConstants.LANGUAGE_CODE,locale.languageCode);
+  void saveLanguage(Locale locale) async {
+    sharedPreferences.setString(
+        AppConstants.LANGUAGE_CODE, locale.languageCode);
     sharedPreferences.setString(AppConstants.COUNTRY_CODE, locale.countryCode!);
-
-}
-
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class RecordListView extends StatefulWidget {
   final List<String> records;
+
   const RecordListView({
     Key? key,
     required this.records,

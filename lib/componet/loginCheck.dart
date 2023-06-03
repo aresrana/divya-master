@@ -1,11 +1,8 @@
-
-
 import 'package:divya/guitarTab/playerPage.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../screens/login/register.dart';
 import '../services/auth.dart';
-
 
 class LoginCheck extends StatefulWidget {
   const LoginCheck({Key? key}) : super(key: key);

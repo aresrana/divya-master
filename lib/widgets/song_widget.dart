@@ -1,15 +1,17 @@
 import 'dart:isolate';
 import 'dart:ui';
-import 'package:flutter_share/flutter_share.dart';
+
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:divya/model/song.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+
 import '../screens/lyrics.dart';
 import '../services/audio_player_service.dart';
 import '../services/song_provider.dart';
@@ -24,12 +26,10 @@ class SongWidget extends StatefulWidget {
     required this.song,
     required this.playingSongList,
     Key? key,
-
   }) : super(key: key);
 
   @override
-  State<SongWidget> createState() =>
-      _SongWidgetState(song, playingSongList );
+  State<SongWidget> createState() => _SongWidgetState(song, playingSongList);
 }
 
 class _SongWidgetState extends State<SongWidget> {
@@ -57,7 +57,7 @@ class _SongWidgetState extends State<SongWidget> {
 
   @override
   void initState() {
-        super.initState();
+    super.initState();
 
     IsolateNameServer.registerPortWithName(
         _port.sendPort, 'downloader_send_port');
@@ -127,7 +127,8 @@ class _SongWidgetState extends State<SongWidget> {
                       children: [
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.6,
-                          child: GestureDetector(
+                          child: InkWell(
+                            splashColor: Colors.grey[300],
                             child: Row(children: [
                               const SizedBox(width: 10),
                               SizedBox(
@@ -154,9 +155,10 @@ class _SongWidgetState extends State<SongWidget> {
                               ),
                             ]),
                             onTap: () async {
-
-                              DefaultCacheManager cacheManager = DefaultCacheManager();
-                              await cacheManager.getSingleFile(widget.song.music);
+                              DefaultCacheManager cacheManager =
+                                  DefaultCacheManager();
+                              await cacheManager
+                                  .getSingleFile(widget.song.music);
 
                               provider.setPlayingList(widget.playingSongList);
                               provider.setPlayingState(false);
@@ -171,32 +173,6 @@ class _SongWidgetState extends State<SongWidget> {
                         SizedBox(
                             width: MediaQuery.of(context).size.width * 0.25,
                             child: Row(children: [
-                              // IconButton(
-                              //   icon: _isActive
-                              //       ? Icon(Icons.add)
-                              //       : Icon(Icons.ac_unit),
-                              //   onPressed: () async {
-                              //     if (_isActive) {
-                              //       await _playlist.add({
-                              //         'music': song.music,
-                              //         'title': song.title,
-                              //         'url': song.url,
-                              //         'name': song.name,
-                              //       });
-                              //       _isActive = false;
-                              //     }
-                              //     showModalBottomSheet(
-                              //         context: context,
-                              //         builder: (context) {
-                              //           return Wrap(children:  [
-                              //             ListTile(
-                              //               tileColor: Colors.grey.shade300,
-                              //              title: Text('Song already added to the Playlist',style :TextStyle(color: Colors.black),textAlign:TextAlign.center,),
-                              //             ),
-                              //           ]);
-                              //         });
-                              //   },
-                              // ),
                               const SizedBox(
                                 width: 2,
                               ),
@@ -219,7 +195,8 @@ class _SongWidgetState extends State<SongWidget> {
                                 onPressed: () async {
                                   await FlutterShare.share(
                                     title: 'Check out this song!',
-                                    text: '${widget.song.title} - ${widget.song.name}',
+                                    text:
+                                        '${widget.song.title} - ${widget.song.name}',
                                     linkUrl: widget.song.music,
                                     chooserTitle: 'Share this song',
                                   );

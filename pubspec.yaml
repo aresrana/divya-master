@@ -77,6 +77,7 @@ dependencies:
   shimmer: ^3.0.0
   get: ^4.6.5
   equalizer_flutter: ^0.0.1
+  random_color: ^1.0.6-nullsafety
 
 
 
@@ -123,6 +124,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/worship.jpg
+    - images/calendar.jpg
     - images/pray.jpg
     - images/witness.jpg
     - images/rapture.jpg
@@ -143,6 +145,7 @@ flutter:
     - images/divya.png
     - assets/language/nep.json
     - assets/language/en.json
+    - images/clock.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -156,22 +159,22 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-   - family: abc
-     fonts:
-       - asset: assets/fonts/CAROBTN_.TTF
+    - family: abc
+      fonts:
+        - asset: assets/fonts/CAROBTN_.TTF
 
-   - family: abcd
-     fonts:
-       - asset: assets/fonts/GreatVibes-Regular.ttf
+    - family: abcd
+      fonts:
+        - asset: assets/fonts/GreatVibes-Regular.ttf
 
-   - family: abcde
-     fonts:
-       - asset: assets/fonts/SCRIPALT.ttf
-       - asset: assets/fonts/SCRIPTIN.ttf
+    - family: abcde
+      fonts:
+        - asset: assets/fonts/SCRIPALT.ttf
+        - asset: assets/fonts/SCRIPTIN.ttf
 
-   - family: abcdef
-     fonts:
-       - asset: assets/fonts/AssassinNinja-7BYyR.ttf
+    - family: abcdef
+      fonts:
+        - asset: assets/fonts/AssassinNinja-7BYyR.ttf
 
 
 

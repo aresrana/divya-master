@@ -4,16 +4,16 @@ class CustomDrawer extends StatelessWidget {
   IconData icon;
   String text;
   Function GoTap;
+
   CustomDrawer(this.icon, this.text, this.GoTap);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
         child: Container(
             decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: Colors.grey))
-
-            ),
+                border: Border(bottom: BorderSide(color: Colors.grey))),
             child: InkWell(
                 splashColor: Colors.yellow,
                 //onTap: GoTap,
@@ -39,8 +39,3 @@ class CustomDrawer extends StatelessWidget {
                 ))));
   }
 }
-
-
-
-
-

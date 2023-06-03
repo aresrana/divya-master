@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SlandingClipper extends CustomClipper<Path>{
+class SlandingClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
@@ -17,5 +17,4 @@ class SlandingClipper extends CustomClipper<Path>{
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return false;
   }
-
 }

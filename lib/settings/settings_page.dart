@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
+
 import '../screens/login/register.dart';
 import '../widgets/icon_widget.dart';
 import 'account_page.dart';
@@ -15,7 +16,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   //AuthService authService = AuthService();
 
   String username = "";
@@ -28,12 +28,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         backgroundColor: Color.fromRGBO(18, 18, 18, 1),
         appBar: AppBar(
-
-       automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           toolbarHeight: 70,
 
           title: Text(
@@ -44,21 +42,19 @@ class _SettingsPageState extends State<SettingsPage> {
               letterSpacing: 1.1,
             ),
           ),
-                backgroundColor: Color.fromRGBO(18, 18, 18, 1),
+          backgroundColor: Color.fromRGBO(18, 18, 18, 1),
           //You can make this transparent
           elevation: 0.0, //No shadow
         ),
         body: SafeArea(
-
           child: ListView(
             padding: EdgeInsets.all(24),
             children: [
-
               HeaderPage(),
               const SizedBox(height: 32),
               SettingsGroup(
                 title: 'GENERAL'.tr,
-                titleTextStyle: TextStyle(color: Colors.white,fontSize: 16),
+                titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
                 children: <Widget>[
                   AccountPage(),
                   NotificationsPage(),
@@ -69,7 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 32),
               SettingsGroup(
                   title: 'FEEDBACK'.tr,
-                  titleTextStyle: TextStyle(color: Colors.white,fontSize:16),
+                  titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
                   children: <Widget>[
                     const SizedBox(height: 8),
                     buildSendFeedback(context),
@@ -77,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 32),
               SettingsGroup(
                 title: 'support'.tr,
-                titleTextStyle: TextStyle(color: Colors.white,fontSize:16),
+                titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
                 children: <Widget>[
                   const SizedBox(height: 8),
                   buildBuyCofee(context),
@@ -89,26 +85,35 @@ class _SettingsPageState extends State<SettingsPage> {
       );
 
   Widget buildLogout() => ListTile(
-    title: Text('logout'.tr,style: TextStyle(color: Colors.white),),
-    subtitle: Text('signout'.tr,style: TextStyle(color: Colors.white),),
-    leading: IconWidget(icon: Icons.logout, color: Colors.blueAccent),
-    onTap: () async {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginPage(),
-          ),
+        title: Text(
+          'logout'.tr,
+          style: TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(
+          'signout'.tr,
+          style: TextStyle(color: Colors.white),
+        ),
+        leading: IconWidget(icon: Icons.logout, color: Colors.blueAccent),
+        onTap: () async {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
+              ),
               (route) => false);
-      //await authService.signOut();
-
-
-    },
-  );
+          //await authService.signOut();
+        },
+      );
 
   Widget buildDeleteAccount() => ListTile(
-      title: Text('Delete_Account'.tr,style: TextStyle(color: Colors.white),),
-
-      subtitle: Text('loose'.tr,style: TextStyle(color: Colors.white),),
+      title: Text(
+        'Delete_Account'.tr,
+        style: TextStyle(color: Colors.white),
+      ),
+      subtitle: Text(
+        'loose'.tr,
+        style: TextStyle(color: Colors.white),
+      ),
       leading: IconWidget(icon: Icons.delete, color: Colors.red),
       onTap: () {
         showDialog(
@@ -131,42 +136,45 @@ class _SettingsPageState extends State<SettingsPage> {
                               MaterialPageRoute(
                                 builder: (context) => const LoginPage(),
                               ),
-                                  (route) => false);
+                              (route) => false);
                           ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content:
-                                  Text("Your Account has been deleted")));
+                                      Text("Your Account has been deleted")));
 
                           // await authService.removeUser();
-
                         })
                   ]);
             });
       });
 
-  Widget buildSendFeedback(BuildContext context) =>
+  Widget buildSendFeedback(BuildContext context) => ListTile(
+      title: Text(
+        'Send_Feedback'.tr,
+        style: TextStyle(color: Colors.white),
+      ),
+      subtitle: Text(
+        'suggestions'.tr,
+        style: TextStyle(color: Colors.white),
+      ),
+      leading: IconWidget(icon: Icons.thumb_up, color: Colors.purple),
+      onTap: () {
+        Wiredash.of(context).show(inheritMaterialTheme: true);
+      });
 
- ListTile(
-          title: Text('Send_Feedback'.tr,style: TextStyle(color: Colors.white),),
-          subtitle: Text('suggestions'.tr,style: TextStyle(color: Colors.white),),
-          leading: IconWidget(icon: Icons.thumb_up, color: Colors.purple),
-          onTap: () {
-            Wiredash.of(context).show(inheritMaterialTheme: true);
-
-          });
-
-
-  Widget buildBuyCofee(BuildContext context) =>
-     ListTile(
-        title: Text('support'.tr,style: TextStyle(color: Colors.white),),
-        subtitle: Text('help'.tr,style: TextStyle(color: Colors.white),),
+  Widget buildBuyCofee(BuildContext context) => ListTile(
+        title: Text(
+          'support'.tr,
+          style: TextStyle(color: Colors.white),
+        ),
+        subtitle: Text(
+          'help'.tr,
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconWidget(icon: Icons.live_help, color: Colors.teal),
         onTap: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => BuyMe()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => BuyMe()));
         },
       );
-
-
-
 }

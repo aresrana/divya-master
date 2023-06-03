@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,6 +23,7 @@ class _HeaderPage extends State<HeaderPage> {
   final _picker = ImagePicker();
   File? _imageFile;
   final User? user = Auth().currentUser;
+
   @override
   void initState() {
     super.initState();
@@ -185,7 +187,6 @@ class _HeaderPage extends State<HeaderPage> {
               onPressed: () {
                 Navigator.pop(context);
                 takePhoto(ImageSource.camera);
-
               },
             ),
             IconButton(
@@ -196,7 +197,6 @@ class _HeaderPage extends State<HeaderPage> {
               onPressed: () {
                 Navigator.pop(context);
                 takePhoto(ImageSource.gallery);
-
               },
             ),
           ])

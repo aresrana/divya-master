@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/model/song.dart';
 
-
-
-
-class AudioPlayeService  {
+class AudioPlayeService {
   final _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;
@@ -38,15 +36,15 @@ class AudioPlayeService  {
     return _instance ??= AudioPlayeService._();
   }
 
- pause() async {
+  pause() async {
     await _audioPlayer.pause();
   }
 
-resume() async {
+  resume() async {
     await _audioPlayer.resume();
   }
 
- playSong(Song song) async {
+  playSong(Song song) async {
     // final file = await DefaultCacheManager().getSingleFile(song.music);
     // String filePath = file.path;
     await _audioPlayer.pause();
@@ -54,12 +52,12 @@ resume() async {
     await _audioPlayer.play(song.music);
   }
 
-dispose() {
+  dispose() {
     _audioPlayer.dispose();
     _instance = null;
   }
 
-   seekTo(Duration position) {
+  seekTo(Duration position) {
     log('$duration');
     _audioPlayer.seek(const Duration(minutes: 5));
   }

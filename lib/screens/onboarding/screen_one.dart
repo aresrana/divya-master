@@ -110,7 +110,10 @@ class OnboardingScreenOne extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavPage())),
                       child: Text(
                         'Skip',
                         style: TextStyle(

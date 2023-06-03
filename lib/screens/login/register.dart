@@ -108,20 +108,18 @@ class _LoginPageState extends State<LoginPage> {
                                 spreadRadius: 3.0)
                           ]),
                       child: TextFormField(
-
-                        decoration: const InputDecoration(
-                          hintText: 'Email',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.mail),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        autofillHints: const [AutofillHints.email],
-                        controller: _controllerEmail,
+                          decoration: const InputDecoration(
+                            hintText: 'Email',
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.mail),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          autofillHints: const [AutofillHints.email],
+                          controller: _controllerEmail,
                           inputFormatters: [
-                            FilteringTextInputFormatter.deny(new RegExp(r"\s\b|\b\s"))
-                          ]
-
-                                           )),
+                            FilteringTextInputFormatter.deny(
+                                new RegExp(r"\s\b|\b\s"))
+                          ])),
                   SizedBox(
                     height: 20,
                   ),
@@ -143,36 +141,46 @@ class _LoginPageState extends State<LoginPage> {
                           ]),
                       child: TextFormField(
                           obscureText: _obscure,
-                        decoration:  InputDecoration(
-                          hintText: 'Password',
-                          border: InputBorder.none,
-                          prefixIcon: Icon(Icons.key_sharp),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                _obscure ? Icons.visibility : Icons.visibility_off,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscure = !_obscure;
-                                });
-                              },
-                        )),
-                        keyboardType: TextInputType.text,
-                        autofillHints: const [AutofillHints.password],
-                        controller: _controllerPassword,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.deny(new RegExp(r"\s\b|\b\s"))
-                        ]
-
-                                        ))
+                          decoration: InputDecoration(
+                              hintText: 'Password',
+                              border: InputBorder.none,
+                              prefixIcon: Icon(Icons.key_sharp),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscure
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscure = !_obscure;
+                                  });
+                                },
+                              )),
+                          keyboardType: TextInputType.text,
+                          autofillHints: const [AutofillHints.password],
+                          controller: _controllerPassword,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.deny(
+                                new RegExp(r"\s\b|\b\s"))
+                          ]))
                 ])),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             _errorMessage(),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             _submitButton(),
             _loginOrRegisterButton(),
-            SizedBox(height: 50,),
-            TextButton(onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => ResetPassword())), child: Text('Forgot Password'))
+            SizedBox(
+              height: 50,
+            ),
+            TextButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResetPassword())),
+                child: Text('Forgot Password'))
           ],
         ),
       ),

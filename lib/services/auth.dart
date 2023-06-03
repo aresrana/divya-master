@@ -25,11 +25,9 @@ class Auth {
 
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
-
   }
+
   resetPasswordLink(String email) {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
-
-
 }

@@ -4,6 +4,10 @@
 <dict>
 	<key>CLIENT_ID</key>
 	<string>1064565526029-4c8hej8slje6i46b0qae9qu51mc016l2.apps.googleusercontent.com</string>
+	  	<key>NSLocalNetworkUsageDescription</key>
+          <string>Allow network access for local communication</string>
+          <key>NSAllowsLocalNetworking</key>
+          <true/>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.1064565526029-4c8hej8slje6i46b0qae9qu51mc016l2</string>
 	<key>API_KEY</key>

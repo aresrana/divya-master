@@ -5,6 +5,7 @@ class Song {
   String name;
   String title;
   String url;
+
   Song({
     required this.music,
     required this.name,

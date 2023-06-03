@@ -41,9 +41,9 @@ android {
     }
 
 
-        configurations {
-            implementation.exclude module: 'play-services-measurement'
-        }
+    configurations {
+        implementation.exclude module: 'play-services-measurement'
+    }
 
 
     compileOptions {
@@ -138,11 +138,11 @@ dependencies {
         exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
     }
     dependencies {
-        implementation ('com.google.android.gms:play-services-measurement:21.2.2') {
+        implementation('com.google.android.gms:play-services-measurement:21.2.2') {
             exclude group: 'com.google.firebase', module: 'firebase-analytics-impl'
         }
     }
-    implementation ('com.google.firebase:firebase-analytics') {
+    implementation('com.google.firebase:firebase-analytics') {
         exclude group: 'com.google.android.gms', module: 'play-services-measurement-api'
 
     }

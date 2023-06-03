@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:divya/screens/Dedication.dart';
@@ -9,7 +10,6 @@ import 'package:divya/screens/prayer.dart';
 import 'package:divya/screens/rapture.dart';
 import 'package:divya/screens/resurrection.dart';
 import 'package:divya/screens/romanized.dart';
-import 'package:divya/screens/trackRecording/recorder.dart';
 import 'package:divya/screens/trackRecording/trackList.dart';
 import 'package:divya/screens/witness.dart';
 import 'package:divya/services/song_provider.dart';
@@ -20,6 +20,8 @@ import 'package:get/get.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../model/subMeetingModel.dart';
 import '../model/song.dart';
 import '../services/auth.dart';
 import 'Meetings/meetings.dart';
@@ -29,7 +31,6 @@ import 'calling.dart';
 import 'christLife.dart';
 import 'death.dart';
 import 'worship.dart';
-import '../../model/subMeetingModel.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -58,11 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Provider.of<SongProvider>(context, listen: false)
         .getSongsByCollection('Worship')
         .then((value) {
-          if (mounted) {
-            setState(() {
-              _songList = value;
-            });
-          }
+      if (mounted) {
+        setState(() {
+          _songList = value;
+        });
+      }
     });
 
     _stream = FirebaseFirestore.instance.collection('Countries').snapshots();
@@ -99,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Column(children: [
                   Text('Dear ${user?.email}',
                       style: TextStyle(fontSize: 18, color: Colors.white)),
-                   Text('Praise_the_Lord'.tr,
+                  Text('Praise_the_Lord'.tr,
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -112,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children:  [
+                  child: Row(children: [
                     SizedBox(width: 5),
                     Text('सियोनका गीतहरू'.tr,
                         style: TextStyle(
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 5),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children:  [
+                  child: Row(children: [
                     SizedBox(width: 10),
                     Text('सभाका गीतहरू'.tr,
                         style: TextStyle(
@@ -142,7 +143,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 20),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children:  [
+                  child: Row(children: [
                     SizedBox(width: 10),
                     Text('Romanized Songs'.tr,
                         style: TextStyle(
@@ -155,7 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(height: 20),
               Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: Row(children:  [
+                  child: Row(children: [
                     SizedBox(width: 10),
                     Text('Recording Tracks'.tr,
                         style: TextStyle(
@@ -163,8 +164,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white))
                   ])),
-                      const SizedBox(height: 20),
-                      _trackRecording(context),
+              const SizedBox(height: 20),
+              _trackRecording(context),
               SizedBox(height: MediaQuery.of(context).size.height * 0.10),
               // Container(
               //     padding: const EdgeInsets.only(left: 10),
@@ -226,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Worship".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -253,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Praise".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -280,7 +281,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Pray".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               ),
             ]),
             SizedBox(
@@ -307,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Promise".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -334,9 +335,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               SizedBox(height: 8),
               Text(
-              "Dedication".tr,
+                "Dedication".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -363,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Witness".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -392,7 +393,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Christian_Life".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -420,7 +421,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Christ's_Call".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -447,7 +448,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Gospel".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -476,7 +477,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Resurrection".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -503,7 +504,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Rapture".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -530,7 +531,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Death".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -557,7 +558,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "New_Year".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
             SizedBox(
@@ -584,7 +585,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Text(
                 "Additional".tr,
                 style: TextStyle(
-                   fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
+                    fontSize: 12, color: Color.fromRGBO(179, 179, 179, 100)),
               )
             ]),
           ],
@@ -604,7 +605,13 @@ class _MyHomePageState extends State<MyHomePage> {
               }
 
               if (!snapshot.hasData) {
-                return CircularProgressIndicator();
+                return Shimmer.fromColors(
+                  child: Container(
+                    color: Colors.white, // Placeholder color
+                  ),
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                );
               }
 
               // Map each document in the collection to a custom object
@@ -618,23 +625,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  if (snapshot.hasData) {
-                                    final meetingDocuments = snapshot.data!.docs;
-                                    if (index < meetingDocuments.length) {
-                                      return MyMeetingScreen(
-                                        meetingDocuments[index].id,
-                                        myObjects[index].country,
-                                      );
-                                    }
-                                  }
-                                  return Container(); // Replace with your desired fallback widget or handle the null case accordingly
-                                },
-                              )
-                          );
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              if (snapshot.hasData) {
+                                final meetingDocuments = snapshot.data!.docs;
+                                if (index < meetingDocuments.length) {
+                                  return MyMeetingScreen(
+                                    meetingDocuments[index].id,
+                                    myObjects[index].country,
+                                  );
+                                }
+                              }
+                              return Container(); // Replace with your desired fallback widget or handle the null case accordingly
+                            },
+                          ));
                         },
                         child: Padding(
                             padding: EdgeInsets.only(right: 10.0),
@@ -662,15 +666,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                             imageUrl: myObjects[index].image,
                                             fit: BoxFit.cover,
                                             placeholder: (BuildContext context,
-                                                String url) =>
+                                                    String url) =>
                                                 Shimmer.fromColors(
-                                                  child: Container(
-                                                    color: Colors
-                                                        .white, // Placeholder color
-                                                  ),
-                                                  baseColor: Colors.grey[300]!,
-                                                  highlightColor: Colors.grey[100]!,
-                                                ),
+                                              child: Container(
+                                                color: Colors
+                                                    .white, // Placeholder color
+                                              ),
+                                              baseColor: Colors.grey[300]!,
+                                              highlightColor: Colors.grey[100]!,
+                                            ),
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .height *

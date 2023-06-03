@@ -1,12 +1,9 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:divya/model/song.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class SongProvider extends ChangeNotifier {
   SongProvider({required col});
-
 
   Song? _playingSong;
   List<Song> _songs = [];
@@ -14,6 +11,7 @@ class SongProvider extends ChangeNotifier {
   int _playinIndex = -1;
   bool _isLoading = true;
   bool _isPlaying = false;
+  List<Song> _searchResults = [];
 
   //GETTER
   List<Song> get songs {
@@ -23,15 +21,22 @@ class SongProvider extends ChangeNotifier {
     return _songs;
   }
 
+  List<Song> get searchResults => _searchResults;
+
   bool get isLoading => _isLoading;
+
   bool get init => _init;
+
   Song? get playingSong => _playingSong;
+
   bool get isPlaying => _isPlaying;
 
   Future<List<Song>> getSongsByCollection(String collection) async {
     try {
-      final songsData =
-          await FirebaseFirestore.instance.collection(collection).orderBy('name').get();
+      final songsData = await FirebaseFirestore.instance
+          .collection(collection)
+          .orderBy('name')
+          .get();
       _init = true;
       _isLoading = false;
       return songsData.docs.map((e) => Song.fromMap(e.data())).toList();
@@ -45,6 +50,11 @@ class SongProvider extends ChangeNotifier {
   void setPlayingSong(Song song) {
     _playingSong = song;
     _playinIndex = songs.indexOf(song);
+    notifyListeners();
+  }
+
+  void setSearchResults(List<Song> results) {
+    _searchResults = results;
     notifyListeners();
   }
 
@@ -76,8 +86,9 @@ class SongProvider extends ChangeNotifier {
   }
 
   void setPlayingState(bool state) {
-    _isPlaying = state;
-    notifyListeners();
+    Future.microtask(() {
+      _isPlaying = state;
+      notifyListeners();
+    });
   }
-
 }

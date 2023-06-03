@@ -1,4 +1,3 @@
-
 import 'dart:math' as math;
 
 import 'package:divya/guitarTab/playerPage.dart';
@@ -115,7 +114,10 @@ class OnboardingScreenThree extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavPage())),
                       child: Text(
                         'Skip',
                         style: TextStyle(
@@ -128,7 +130,10 @@ class OnboardingScreenThree extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(right: appPadding),
                     child: FloatingActionButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavPage())),
                       backgroundColor: white,
                       child: Icon(
                         Icons.done_rounded,

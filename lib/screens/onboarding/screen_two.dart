@@ -1,4 +1,3 @@
-
 import 'package:divya/screens/onboarding/screen_three.dart';
 import 'package:flutter/material.dart';
 
@@ -113,7 +112,10 @@ class OnboardingScreenTwo extends StatelessWidget {
                   Container(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Navigator.push(context,MaterialPageRoute(builder: (context) => BottomNavPage())),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => BottomNavPage())),
                       child: Text(
                         'Skip',
                         style: TextStyle(

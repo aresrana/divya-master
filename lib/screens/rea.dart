@@ -1,4 +1,3 @@
-
 import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:flutter/material.dart';
 
@@ -19,14 +18,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
 class FilePage extends StatefulWidget {
   @override
   _FilePageState createState() => _FilePageState();
 }
 
 class _FilePageState extends State<FilePage> {
-  String file ='https://firebasestorage.googleapis.com/v0/b/jiwdopani-e766d.appspot.com/o/NepaliBread%2F01%20April%202022.pdf?alt=media&token=e94d2197-2643-4b75-92d3-74c844ce6304';
+  String file =
+      'https://firebasestorage.googleapis.com/v0/b/jiwdopani-e766d.appspot.com/o/NepaliBread%2F01%20April%202022.pdf?alt=media&token=e94d2197-2643-4b75-92d3-74c844ce6304';
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,10 @@ class _FilePageState extends State<FilePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.grey.shade200,
-          title: Text(file.split('.').first,style: TextStyle(color: Colors.black),),
+          title: Text(
+            file.split('.').first,
+            style: TextStyle(color: Colors.black),
+          ),
           centerTitle: true,
         ),
         body: FutureBuilder(
@@ -53,10 +56,10 @@ class _FilePageState extends State<FilePage> {
                   );
                 default:
                   var pdf = snapshot.data as PDFDocument;
-                  return PDFViewer(document: pdf,
+                  return PDFViewer(
+                    document: pdf,
                     lazyLoad: true,
                     scrollDirection: Axis.horizontal,
-
                   );
               }
             }),
@@ -64,4 +67,3 @@ class _FilePageState extends State<FilePage> {
     );
   }
 }
-
