@@ -16,12 +16,21 @@ class TapMiniPlayer extends StatefulWidget {
 class _TapMiniPlayerState extends State<TapMiniPlayer> {
   double _volumeListenerValue = 0;
   double _getVolume = 0;
+  final audioPlayerService = AudioPlayerService.instance;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
   double _setVolumeValue = 0;
   bool _isMuted = false;
+
+  AudioPlayer _audioPlayer = AudioPlayer();
+  bool isSliderBeingChanged = false;
 
   @override
   void initState() {
     super.initState();
+    _audioPlayer = AudioPlayer();
+
     VolumeController().getVolume().then((value) {
       setState(() {
         _isMuted = value == 0.0;
@@ -50,8 +59,6 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    AudioPlayer _audioPlayer = AudioPlayer();
-    final audioPlayerService = AudioPlayeService.instance;
     final provider = Provider.of<SongProvider>(context);
     final name = provider.playingSong?.name ?? "N/A";
     final title = provider.playingSong?.title ?? "N/A";
@@ -60,9 +67,13 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
         body: SafeArea(
             child: SingleChildScrollView(
                 child: StreamBuilder<Duration>(
-                    stream: AudioPlayeService.instance.positionStream,
+                    stream: audioPlayerService.positionStream,
                     builder: (context, snapshot) {
-                      final position = snapshot.data ?? Duration.zero;
+                      if (snapshot.hasData) {
+                        position = snapshot.data!;
+                        // Calculate the total duration separately
+                        duration = audioPlayerService.duration;
+                      }
                       return Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -251,51 +262,27 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
                             //            )),
                             //      ]),
                             SizedBox(height: 20),
+                            // Original Slider widget
+                            // Original Slider widget
                             SliderTheme(
                               data: SliderThemeData(
-                                  thumbShape: RoundSliderThumbShape(
-                                      enabledThumbRadius: 4.0)),
-
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 4.0),
+                              ),
                               child: Slider(
-                                value: position.inSeconds.toDouble(),
-                                min: 0,
-                                max: audioPlayerService.duration.inSeconds
-                                    .toDouble(),
-                                onChanged: (double value) {
-                                  setState(() {
-                                    // position = Duration(seconds: value.toInt());
-                                  });
-                                },
-                                onChangeEnd: (double value) async {
-                                  final position =
-                                      Duration(seconds: value.toInt());
-                                  await _audioPlayer.seek(position);
-                                  await _audioPlayer.resume();
+                                value: position.inMilliseconds.toDouble().clamp(
+                                    0.0, duration.inMilliseconds.toDouble()),
+                                min: 0.0,
+                                max: duration.inMilliseconds.toDouble(),
+                                onChanged: (value) {
+                                  final newPosition =
+                                      Duration(milliseconds: value.round());
+                                  audioPlayerService.seekTo(newPosition);
                                 },
                                 activeColor: Colors.white,
                                 inactiveColor: Colors.black,
                               ),
 
-                              // Slider(
-                              //   value: ,
-                              //   min: 0,
-                              //   max: audioPlayerService.duration.inSeconds.toDouble(),
-                              //   onChanged: (double value) async {
-                              //     final position = Duration(seconds: value.toInt());
-                              //     setState(() {
-                              //       // Update the position to the selected value
-                              //       this.position = position;
-                              //     });
-                              //     await _audioPlayer.seek(position);
-                              //   },
-                              //   onChangeEnd: (double value) async {
-                              //     final position = Duration(seconds: value.toInt());
-                              //     await _audioPlayer.seek(position);
-                              //     await _audioPlayer.resume();
-                              //   },
-                              //   activeColor: Colors.white,
-                              //   inactiveColor: Colors.black,
-                              // )
                             ),
                             Container(
                                 padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
@@ -325,9 +312,20 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Container(
-                                    child: IconButton(
+                                child: IconButton(
                                   icon: const Icon(
                                     Icons.fast_rewind,
+                                    color: Colors.black,
+                                    size: 40,
+                                  ),
+                                  onPressed: () {
+                                    audioPlayerService.resumeBy10Seconds();
+                                  },
+                                )),
+                                       Container(
+                                    child: IconButton(
+                                  icon: const Icon(
+                                    Icons.skip_previous,
                                     color: Colors.black,
                                     size: 45,
                                   ),
@@ -361,7 +359,7 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
                                 Container(
                                     child: IconButton(
                                   icon: const Icon(
-                                    Icons.fast_forward,
+                                    Icons.skip_next,
                                     color: Colors.black,
                                     size: 45,
                                   ),
@@ -372,32 +370,17 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
                                     provider.setPlayingState(false);
                                   },
                                 )),
-
-                                // Container(
-                                //     child: IconButton(
-                                //   icon: const Icon(
-                                //     Icons.replay,
-                                //     color: Colors.black,
-                                //     size: 50,
-                                //   ),
-                                //   onPressed: () async {
-                                //     provider.playPrevSong();
-                                //     audioPlayerService.playSong(
-                                //         provider.playingSong!);
-                                //     provider.setPlayingState(false);
-                                //   },
-                                // )),
-                                // Container(
-                                //     child: IconButton(
-                                //   icon: Icon(
-                                //     Icons.volume_off,
-                                //     color: Colors.black,
-                                //     size: 50,
-                                //   ),
-                                //   onPressed: () async {
-                                //     VolumeController().muteVolume();
-                                //   },
-                                // )),
+                                Container(
+                                    child: IconButton(
+                                      icon: const Icon(
+                                        Icons.fast_forward,
+                                        color: Colors.black,
+                                        size: 45,
+                                      ),
+                                      onPressed: () {
+                                        audioPlayerService.forwardBy10Seconds();
+                                      },
+                                    )),
                               ],
                             ),
                             SizedBox(
@@ -445,22 +428,6 @@ class _TapMiniPlayerState extends State<TapMiniPlayer> {
                                     ),
                                   ],
                                 )),
-
-                            Container(
-                                child: IconButton(
-                                    icon: const Icon(
-                                      Icons.bluetooth,
-                                      color: Colors.black,
-                                      size: 45,
-                                    ),
-                                    onPressed: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   MaterialPageRoute(
-                                      //     builder: (context) => MyCollectionScreen(),
-                                      //   ),
-                                      // );
-                                    })),
 
                             // ),
                           ]);

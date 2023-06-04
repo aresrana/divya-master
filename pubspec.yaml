@@ -36,8 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar:
   firebase_core:
-  firebase_auth:
-  cloud_firestore:
+
   webview_flutter_plus:
   audioplayers: ^0.20.1
   marquee: ^2.2.3
@@ -78,6 +77,8 @@ dependencies:
   get: ^4.6.5
   equalizer_flutter: ^0.0.1
   random_color: ^1.0.6-nullsafety
+  cloud_firestore: ^4.8.0
+  firebase_auth: ^4.6.2
 
 
 

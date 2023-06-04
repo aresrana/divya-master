@@ -18,6 +18,8 @@ class DashBoard extends StatefulWidget {
 class _DashBoardState extends State<DashBoard> {
   String keyword = "";
 
+
+
   Future<void> signOut() async {
     await Auth().signOut();
   }
@@ -29,14 +31,21 @@ class _DashBoardState extends State<DashBoard> {
           .where('search', arrayContains: keyword)
           .get(),
       FirebaseFirestore.instance
-          .collection('praise')
+          .collection('Praise')
           .where('search', arrayContains: keyword)
           .get(),
       FirebaseFirestore.instance
-          .collection('pray')
+          .collection('Pray')
           .where('search', arrayContains: keyword)
           .get(),
+      FirebaseFirestore.instance
+          .collection('Countries/ZHi1WnS3maIggJGFJymD/Meetings/4laRfp0CdH8yE6r7IXrx/Location/OmLWliL7boKVQtTfvpLi/Years/4MUj1kbwXUNsBB7yWNCJ/Songs')
+          .where('search', arrayContains: keyword)
+          .get(),
+
     ]);
+
+
 
     List<DocumentSnapshot> results = [];
     for (var snapshot in snapshots) {
@@ -159,18 +168,60 @@ class _DashBoardState extends State<DashBoard> {
                           ),
                         ],
                       ),
-                      onTap: () {
-                        final List<Song> songs = documents.map((doc) {
-                          final Map<String, dynamic> data =
-                              (doc.data() as Map<String, dynamic>?)!;
-                          return Song.fromMap(data);
-                        }).toList();
+                      onTap: () async {
+                        FocusScope.of(context).unfocus();
+
+                        final DocumentSnapshot document = documents[index];
+                        final String collectionName = document.reference.parent!.id; // Retrieve the collection name
+                        final List<DocumentSnapshot> playlist = await FirebaseFirestore.instance
+                            .collection(collectionName)
+                        .orderBy('name')
+                            .get()
+                            .then((snapshot) => snapshot.docs);
+
+                        final List<Song> songs = playlist.map((doc) => Song.fromMap(doc.data() as Map<String, dynamic>)).toList();
 
                         provider.setPlayingList(songs);
                         provider.setPlayingState(false);
-                        provider.setPlayingSong(songs[index]);
-                        AudioPlayeService.instance.playSong(songs[index]);
+
+                        final Song selectedSong = Song.fromMap(document.data() as Map<String, dynamic>);
+                        provider.setPlayingSong(selectedSong);
+
+                        AudioPlayerService.instance.playSong(selectedSong);
+
+                        final List<String> files = (document.data() as Map<String, dynamic>)['files'];
+                        print('List of Files: $files');
                       },
+
+                      // onTap: () async {
+                      //   final DocumentSnapshot document = documents[index];
+                      //   final String collectionName = document.reference.parent!.id; // Retrieve the collection name
+                      //   final List<DocumentSnapshot> playlist = await FirebaseFirestore.instance
+                      //       .collection(collectionName)
+                      //       .orderBy('name')
+                      //       .get()
+                      //       .then((snapshot) => snapshot.docs);
+                      //
+                      //   final List<Song> songs = playlist.map((doc) => Song.fromMap(doc.data() as Map<String, dynamic>)).toList();
+                      //
+                      //   provider.setPlayingList(songs);
+                      //   provider.setPlayingState(false);
+                      //   provider.setPlayingSong(songs[index]);
+                      //   AudioPlayerService.instance.playSong(songs[index]);
+                      // },
+
+                      // onTap: () {
+                      //   final List<Song> songs = documents.map((doc) {
+                      //     final Map<String, dynamic> data =
+                      //         (doc.data() as Map<String, dynamic>?)!;
+                      //     return Song.fromMap(data);
+                      //   }).toList();
+                      //
+                      //   provider.setPlayingList(songs);
+                      //   provider.setPlayingState(false);
+                      //   provider.setPlayingSong(songs[index]);
+                      //   AudioPlayerService.instance.playSong(songs[index]);
+                      // },
                     ),
                   );
                 },

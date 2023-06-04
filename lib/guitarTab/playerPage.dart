@@ -38,9 +38,9 @@ class _BottomNavPageState extends State<BottomNavPage> {
     await provider.getSongsByCollection('Worship').then((value) {
       provider.setPlayingList(value);
     });
-    AudioPlayeService.instance.onAudioComplet = () {
+    AudioPlayerService.instance.onAudioComplete = () {
       provider.playNextSong();
-      AudioPlayeService.instance.playSong(provider.playingSong!);
+      AudioPlayerService.instance.playSong(provider.playingSong!);
     };
     _imageNotifier.value = _imageFile;
   }
@@ -55,7 +55,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
 
   @override
   void dispose() {
-    AudioPlayeService.instance.dispose();
+    AudioPlayerService.instance.dispose();
     super.dispose();
   }
 

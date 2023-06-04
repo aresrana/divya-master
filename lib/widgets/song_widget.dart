@@ -164,7 +164,7 @@ class _SongWidgetState extends State<SongWidget> {
                               provider.setPlayingState(false);
                               provider.setPlayingSong(widget.song);
                               // provider.setPlayingSong(widget.ares);
-                              AudioPlayeService.instance.playSong(widget.song);
+                              AudioPlayerService.instance.playSong(widget.song);
                             },
                           ),
                         ),
