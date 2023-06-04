@@ -170,7 +170,7 @@ class _TrackWidget extends State<TrackWidget> {
                               // provider.setPlayingState(false);
                               // provider.setPlayingSong(widget.song);
                               // // provider.setPlayingSong(widget.ares);
-                              // AudioPlayeService.instance.playSong(widget.song);
+                              // AudioPlayerService.instance.playSong(widget.song);
                             },
                           ),
                         ),
@@ -189,7 +189,7 @@ class _TrackWidget extends State<TrackWidget> {
                         //           provider.setPlayingState(false);
                         //           provider.setPlayingSong(widget.song);
                         //           // provider.setPlayingSong(widget.ares);
-                        //           AudioPlayeService.instance.playSong(widget.song);
+                        //           AudioPlayerService.instance.playSong(widget.song);
                         //         },
                         //       ),
                         //       const SizedBox(

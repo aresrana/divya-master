@@ -4,14 +4,14 @@ import 'dart:developer';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/model/song.dart';
 
-class AudioPlayeService {
+class AudioPlayerService {
   final _audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
-  Function? onAudioComplet;
+  Function? onAudioComplete;
 
-  AudioPlayeService._() {
+  AudioPlayerService._() {
     _audioPlayer.onPlayerStateChanged.listen((state) {
       isPlaying = state == PlayerState.PLAYING;
     });
@@ -22,18 +22,18 @@ class AudioPlayeService {
       position = newPosition;
     });
     _audioPlayer.onPlayerCompletion.listen((event) {
-      if (onAudioComplet != null) {
-        onAudioComplet!();
+      if (onAudioComplete != null) {
+        onAudioComplete!();
       }
     });
   }
 
-  static AudioPlayeService? _instance;
+  static AudioPlayerService? _instance;
+  Stream<Duration> get positionStream => _audioPlayer.onAudioPositionChanged.map((event) => event);
 
-  Stream<Duration> get positionStream => _audioPlayer.onAudioPositionChanged;
 
-  static AudioPlayeService get instance {
-    return _instance ??= AudioPlayeService._();
+  static AudioPlayerService get instance {
+    return _instance ??= AudioPlayerService._();
   }
 
   pause() async {
@@ -57,8 +57,19 @@ class AudioPlayeService {
     _instance = null;
   }
 
-  seekTo(Duration position) {
-    log('$duration');
-    _audioPlayer.seek(const Duration(minutes: 5));
+  seekTo(Duration newPosition) async {
+    await _audioPlayer.seek(newPosition);
   }
+
+  forwardBy10Seconds() async {
+    final newPosition = position + Duration(seconds: 10);
+    await _audioPlayer.seek(newPosition);
+  }
+
+  resumeBy10Seconds() async {
+    final newPosition = position - Duration(seconds: 10);
+    await _audioPlayer.seek(newPosition);
+  
+  }
+
 }

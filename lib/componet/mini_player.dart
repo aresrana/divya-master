@@ -1,3 +1,4 @@
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/services/song_provider.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,12 @@ class MiniPlayer extends StatefulWidget {
 }
 
 class _MiniPlayer extends State<MiniPlayer> {
+  AudioPlayer _audioPlayer = AudioPlayer();
+  final audioPlayerService = AudioPlayerService.instance;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
+
   String formatTime(int seconds) {
     return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
   }
@@ -22,16 +29,17 @@ class _MiniPlayer extends State<MiniPlayer> {
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    AudioPlayer _audioPlayer = AudioPlayer();
-    final audioPlayerService = AudioPlayeService.instance;
+
     final provider = Provider.of<SongProvider>(context);
     final name = provider.playingSong?.name ?? "N/A";
     final title = provider.playingSong?.title ?? "N/A";
-
+ Duration duration = Duration.zero;
+ Duration position = Duration.zero;
     return AnimatedContainer(
         duration: const Duration(milliseconds: 50),
         height: MediaQuery.of(context).size.height * 0.06,
@@ -43,12 +51,16 @@ class _MiniPlayer extends State<MiniPlayer> {
           //border: Border.all(color: Colors.orange, width: 5), // added
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: StreamBuilder<Duration>(
-            stream: AudioPlayeService.instance.positionStream,
+        child:StreamBuilder<Duration>(
+            stream: audioPlayerService.positionStream,
             builder: (context, snapshot) {
-              final position = snapshot.data ?? Duration.zero;
-
-              return Column(children: [
+              if (snapshot.hasData) {
+                position = snapshot.data!;
+                // Calculate the total duration separately
+                duration = audioPlayerService.duration;
+              }
+              return Column(
+                  children: [
                 Expanded(
                     child: Row(
                   children: [
@@ -125,27 +137,26 @@ class _MiniPlayer extends State<MiniPlayer> {
                     )),
                   ],
                 )),
-                SliderTheme(
-                    data: SliderThemeData(
-                      thumbShape:
-                          RoundSliderThumbShape(enabledThumbRadius: 2.0),
-                      overlayShape:
-                          RoundSliderOverlayShape(overlayRadius: 10.0),
+                    SliderTheme(
+                      data: SliderThemeData(
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0),
+                        overlayShape: RoundSliderOverlayShape(overlayRadius: 10.0),
+                      ),
+                      child: Slider(
+                        value: position.inMilliseconds.toDouble().clamp(0.0, duration.inMilliseconds.toDouble()),
+                        min: 0.0,
+                        max: duration.inMilliseconds.toDouble(),
+                        onChanged: (value) {
+                          final newPosition = Duration(milliseconds: value.round());
+                          audioPlayerService.seekTo(newPosition);
+                        },
+
+                      ),
                     ),
-                    child: Slider(
-                      value: position.inSeconds.toDouble(),
-                      min: 0,
-                      max: audioPlayerService.duration.inSeconds.toDouble(),
-                      onChanged: (double value) async {
-                        audioPlayerService.position =
-                            await Duration(seconds: value.toInt());
-                        _audioPlayer.seek(AudioPlayeService.instance.position);
-                        print(audioPlayerService.position);
-                      },
-                      activeColor: Colors.white,
-                      inactiveColor: Colors.black,
-                    )),
-                // Container(
+
+
+
+                    // Container(
                 //     padding: EdgeInsets.all(20),
                 //     child: Row(
                 //       children: [
