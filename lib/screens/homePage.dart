@@ -708,12 +708,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       image: AssetImage('images/worship.jpg'),
                       fit: BoxFit.cover)),
             ),
-            onTap: () => Navigator.of(context).push(PageTransition(
-                child: const EpubReader(),
-                type: PageTransitionType.rightToLeft,
-                duration: const Duration(milliseconds: 600),
-                reverseDuration: const Duration(milliseconds: 600),
-                opaque: false))));
+            onTap: () {}
+            //     Navigator.of(context).push(PageTransition(
+            //     child: const EpubReader(),
+            //     type: PageTransitionType.rightToLeft,
+            //     duration: const Duration(milliseconds: 600),
+            //     reverseDuration: const Duration(milliseconds: 600),
+            //     opaque: false)
+            //
+            // )
+        ));
   }
 
   Widget _trackRecording(BuildContext context) {

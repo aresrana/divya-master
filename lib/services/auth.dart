@@ -30,4 +30,6 @@ class Auth {
   resetPasswordLink(String email) {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
+
+
 }

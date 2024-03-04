@@ -81,5 +81,10 @@
   "Meetings": "Meetings",
   "Holy Convocation": "Holy Convocation",
   "Special Meeting": "Special Meeting",
-  "Youth Meeting": "Youth Meeting"
+  "Youth Meeting": "Youth Meeting",
+  "isCountryRequired" : "Country is required",
+  "isMeetingRequired": "Meeting is required",
+  "iPlaceRequired" : "Place is required",
+  "isYearRequired" : "Year is required",
+  "isChurchRequired": "Church is required"
 }

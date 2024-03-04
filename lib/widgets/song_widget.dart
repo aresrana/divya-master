@@ -72,7 +72,7 @@ class _SongWidgetState extends State<SongWidget> {
       setState(() {});
     });
 
-    FlutterDownloader.registerCallback(downloadCallback);
+    FlutterDownloader.registerCallback(downloadCallback as DownloadCallback);
   }
 
   @override
@@ -82,12 +82,11 @@ class _SongWidgetState extends State<SongWidget> {
   }
 
   @pragma('vm:entry-point')
-  static void downloadCallback(
-      String id, DownloadTaskStatus status, int progress) {
-    final SendPort? send =
-        IsolateNameServer.lookupPortByName('downloader_send_port');
+  static void downloadCallback(String id, int status, int progress) {
+    final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
     send?.send([id, status, progress]);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +125,7 @@ class _SongWidgetState extends State<SongWidget> {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.6,
+                          width: MediaQuery.of(context).size.width * 0.7,
                           child: InkWell(
                             splashColor: Colors.grey[300],
                             child: Row(children: [
@@ -168,42 +167,42 @@ class _SongWidgetState extends State<SongWidget> {
                             },
                           ),
                         ),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.08),
-                        SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.25,
-                            child: Row(children: [
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.bookmark_sharp),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Lyrics(
-                                              widget.song.url,
-                                              widget.song.title)));
-                                },
-                              ),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.download),
-                                onPressed: () async {
-                                  await FlutterShare.share(
-                                    title: 'Check out this song!',
-                                    text:
-                                        '${widget.song.title} - ${widget.song.name}',
-                                    linkUrl: widget.song.music,
-                                    chooserTitle: 'Share this song',
-                                  );
-                                  download(widget.song.music);
-                                },
-                              )
-                            ]))
+                        // SizedBox(
+                        //     width: MediaQuery.of(context).size.width * 0.09),
+                        // SizedBox(
+                        //     width: MediaQuery.of(context).size.width * 0.2,
+                        //     child: Row(children: [
+                        //       const SizedBox(
+                        //         width: 2,
+                        //       ),
+                        //       IconButton(
+                        //         icon: const Icon(Icons.bookmark_sharp),
+                        //         onPressed: () {
+                        //           Navigator.push(
+                        //               context,
+                        //               MaterialPageRoute(
+                        //                   builder: (context) => Lyrics(
+                        //                       widget.song.url,
+                        //                       widget.song.title)));
+                        //         },
+                        //       ),
+                        //       // const SizedBox(
+                        //       //   width: 2,
+                        //       // ),
+                        //       // IconButton(
+                        //       //   icon: const Icon(Icons.download),
+                        //       //   onPressed: () async {
+                        //       //     await FlutterShare.share(
+                        //       //       title: 'Check out this song!',
+                        //       //       text:
+                        //       //           '${widget.song.title} - ${widget.song.name}',
+                        //       //       linkUrl: widget.song.music,
+                        //       //       chooserTitle: 'Share this song',
+                        //       //     );
+                        //       //     download(widget.song.music);
+                        //       //   },
+                        //       // )
+                        //     ]))
                       ],
                     )))),
       ],

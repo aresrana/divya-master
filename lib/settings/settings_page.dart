@@ -3,6 +3,7 @@ import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:get/get.dart';
 import 'package:wiredash/wiredash.dart';
 
+import '../screens/contribute/upload.dart';
 import '../screens/login/register.dart';
 import '../widgets/icon_widget.dart';
 import 'account_page.dart';
@@ -60,6 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   NotificationsPage(),
                   buildLogout(),
                   buildDeleteAccount(),
+                  buildContribute(),
                 ],
               ),
               const SizedBox(height: 32),
@@ -104,6 +106,28 @@ class _SettingsPageState extends State<SettingsPage> {
           //await authService.signOut();
         },
       );
+
+  Widget buildContribute() => ListTile(
+    title: Text(
+      'contribute'.tr,
+      style: TextStyle(color: Colors.white),
+    ),
+    subtitle: Text(
+      'Please do contirbute'.tr,
+      style: TextStyle(color: Colors.white),
+    ),
+    leading: IconWidget(icon: Icons.upload_file , color: Colors.indigoAccent ),
+    onTap: () async {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FileUploadScreen(),
+          ),
+              (route) => false);
+      //await authService.signOut();
+    },
+  );
+
 
   Widget buildDeleteAccount() => ListTile(
       title: Text(

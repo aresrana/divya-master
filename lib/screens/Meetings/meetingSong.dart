@@ -103,7 +103,7 @@ class _MeetingSongState extends State<MeetingSong> {
                   borderRadius: BorderRadius.all(Radius.circular(300)),
                   border: Border.all(color: Colors.grey.shade300, width: 12),
                   image: const DecorationImage(
-                      image: AssetImage('images/cross.jpg'), fit: BoxFit.cover),
+                      image: AssetImage('images/meet.jpg'), fit: BoxFit.cover),
                 ),
               ),
               const SizedBox(

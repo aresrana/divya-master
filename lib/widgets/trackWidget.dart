@@ -69,7 +69,7 @@ class _TrackWidget extends State<TrackWidget> {
       setState(() {});
     });
 
-    FlutterDownloader.registerCallback(downloadCallback);
+    FlutterDownloader.registerCallback(downloadCallback as DownloadCallback);
   }
 
   @override

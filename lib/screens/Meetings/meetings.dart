@@ -31,6 +31,7 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   DocumentSnapshot<Object?>? _selectedMeeting;
   List<bool> selectedCards = [];
 
+
   @override
   void initState() {
     super.initState();
@@ -53,191 +54,34 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   }
 
   void initializeSelectedCards() {
-    setState(() {
-      selectedCards = List.generate(
-        meetingDocuments.length,
-        (index) => index == 0,
-      );
-    });
+    selectedCards = List.generate(
+      meetingDocuments.length,
+          (index) => index == 0,
+    );
   }
+
+
 
   void togglePlaces(int index) {
     setState(() {
-      selectedCards[index] = !selectedCards[index];
+      if (selectedCards.isEmpty) {
+        initializeSelectedCards();
+      }
 
       if (selectedIndex == index) {
         selectedIndex = -1;
         _selectedMeeting = null;
       } else {
         selectedIndex = index;
-        _selectedMeeting = meetingDocuments[index];
+        _selectedMeeting = meetingDocuments[selectedIndex];
+      }
+
+      for (int i = 0; i < selectedCards.length; i++) {
+        selectedCards[i] = (i == selectedIndex);
       }
     });
-    for (int i = 0; i < selectedCards.length; i++) {
-      selectedCards[i] = (i == selectedIndex);
-    }
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   final provider = context.watch<SongProvider>();
-  //
-  //   return Scaffold(
-  //     backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-  //     appBar: AppBar(
-  //       backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-  //       elevation: 0,
-  //       title: Text(
-  //         'Meetings'.tr,
-  //         style: TextStyle(
-  //           color: Colors.white,
-  //           fontSize: 20,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ),
-  //     ),
-  //     body: Column(
-  //       children: [
-  //         SizedBox(height: 20),
-  //         SizedBox(
-  //           height: MediaQuery.of(context).size.height * 0.55,
-  //           child: StreamBuilder<QuerySnapshot>(
-  //             stream: FirebaseFirestore.instance
-  //                 .collection('Countries/${widget.country}/Meetings')
-  //                 .snapshots(),
-  //             builder: (BuildContext context,
-  //                 AsyncSnapshot<QuerySnapshot> snapshot) {
-  //               if (snapshot.hasError) {
-  //                 return Center(child: Text('Error: ${snapshot.error}'));
-  //               }
-  //
-  //               if (!snapshot.hasData) {
-  //                 return Center(child: CircularProgressIndicator());
-  //               }
-  //
-  //               final meetingDocuments = snapshot.data!.docs;
-  //
-  //               return Padding(
-  //                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-  //                   child: SizedBox.expand(
-  //                     child: Stack(
-  //                       children:
-  //                           List.generate(meetingDocuments.length, (index) {
-  //                         final document = meetingDocuments[index];
-  //                         final meeting = document['meeting'] as String;
-  //                         final imageUrl = document['image'] as String;
-  //                         bool isSelected = selectedCards[index];
-  //
-  //                         return Positioned(
-  //                           top: index * 100.0,
-  //                           left: index * 20,
-  //                           child: GestureDetector(
-  //                             onTap: () {
-  //                               selectedCards[index] = !selectedCards[index];
-  //
-  //                               togglePlaces(index);
-  //                             },
-  //                             child: Container(
-  //                               width: MediaQuery.of(context).size.width *
-  //                                   0.85, // Specify the desired width
-  //                               height: MediaQuery.of(context).size.height *
-  //                                   0.27, // Specify the desired height
-  //                               child: Card(
-  //                                 elevation: 5.0,
-  //                                 shape: RoundedRectangleBorder(
-  //                                   borderRadius: BorderRadius.circular(20.0),
-  //                                 ),
-  //                                 child: ClipRRect(
-  //                                   borderRadius: BorderRadius.circular(20.0),
-  //                                   child: Stack(
-  //                                     children: [
-  //                                       if (imageUrl != null)
-  //                                         CachedNetworkImage(
-  //                                           imageUrl: imageUrl,
-  //                                           fit: BoxFit.cover,
-  //                                           width: double.infinity,
-  //                                           height: double.infinity,
-  //                                           placeholder: (BuildContext context,
-  //                                                   String url) =>
-  //                                               Shimmer.fromColors(
-  //                                             child: Container(
-  //                                               color: Colors
-  //                                                   .white, // Placeholder color
-  //                                             ),
-  //                                             baseColor: Colors.grey[300]!,
-  //                                             highlightColor: Colors.grey[100]!,
-  //                                           ),
-  //                                           errorWidget: (BuildContext context,
-  //                                                   String url,
-  //                                                   dynamic error) =>
-  //                                               Container(
-  //                                             color: Colors
-  //                                                 .grey, // Placeholder color
-  //                                           ),
-  //                                         ),
-  //                                       Positioned(
-  //                                         top: 6.0,
-  //                                         left: 100.0,
-  //                                         child: Text(
-  //                                           meeting.tr,
-  //                                           style: TextStyle(
-  //                                               color: Colors.black,
-  //                                               fontSize: 25.0,
-  //                                               fontWeight: FontWeight.bold,
-  //                                               fontFamily: "abcdef"),
-  //                                         ),
-  //                                       ),
-  //                                       if (isSelected)
-  //                                         Positioned(
-  //                                           top: 10.0,
-  //                                           right: 10.0,
-  //                                           child: Icon(
-  //                                             Icons.check,
-  //                                             color: Colors.green,
-  //                                             size: 30.0,
-  //                                           ),
-  //                                         ),
-  //                                     ],
-  //                                   ),
-  //                                 ),
-  //                               ),
-  //                             ),
-  //                           ),
-  //                         );
-  //                       }),
-  //                     ),
-  //                   ));
-  //             },
-  //           ),
-  //         ),
-  //         Visibility(
-  //           visible: selectedIndex != -1,
-  //           child: selectedIndex != -1
-  //               ? SizedBox(
-  //                   width: MediaQuery.of(context).size.width * 0.95,
-  //                   height: MediaQuery.of(context).size.height * 0.2,
-  //                   child: Container(
-  //                     decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(20.0),
-  //                       color: Colors.white,
-  //                     ),
-  //                     child: PlacesScreen(
-  //                       meeting: meetingDocuments[selectedIndex]['meeting']
-  //                           as String,
-  //                       meetingId: meetingDocuments[selectedIndex].id,
-  //                       country: widget.country,
-  //                     ),
-  //                   ),
-  //                 )
-  //               : Text("No Data Available"),
-  //         )
-  //       ],
-  //     ),
-  //     floatingActionButton: provider.playingSong != null ? MiniPlayer() : null,
-  //     floatingActionButtonLocation:
-  //         FloatingActionButtonLocation.centerDocked, //
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

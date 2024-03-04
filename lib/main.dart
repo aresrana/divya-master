@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,7 @@ Future<void> main() async {
       ignoreSsl:
           true // option: set to false to disable working with http links (default: false)
       );
+   Fluttertoast.showToast(msg: '');
 
   await Firebase.initializeApp();
 
@@ -76,7 +78,8 @@ class MyApp extends StatelessWidget {
                 // 'onboard': (context)=> OnboardingScreenOne(),
                 //  'home' : (context)=>  LoginCheck()
               );
-            })));
+            })
+        ));
     //);
   }
 }

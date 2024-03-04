@@ -150,6 +150,8 @@ class _MiniPlayer extends State<MiniPlayer> {
                           final newPosition = Duration(milliseconds: value.round());
                           audioPlayerService.seekTo(newPosition);
                         },
+                        activeColor: Colors.white,
+                        inactiveColor: Colors.black,
 
                       ),
                     ),

@@ -8,3 +8,4 @@ class LanguageModel {
       required this.languageCode,
       required this.countryCode});
 }
+
