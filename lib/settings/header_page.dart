@@ -33,17 +33,18 @@ class _HeaderPage extends State<HeaderPage> {
 
   Future<void> takePhoto(ImageSource source) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final image = await _picker.getImage(source: source);
+    final image = await ImagePicker().pickImage(source: source); // Change this line
     if (image != null) {
       final imageTemporary = File(image.path);
       setState(() {
         _imageFile = imageTemporary;
       });
-      final bytes = await image.readAsBytes();
+      final bytes = await imageTemporary.readAsBytes();
       final base64Image = base64Encode(bytes);
       await prefs.setString('myImageKey', base64Image);
     }
   }
+
 
   Future<File?> showData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

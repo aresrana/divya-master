@@ -12,7 +12,9 @@ import 'package:divya/screens/resurrection.dart';
 import 'package:divya/screens/romanized.dart';
 import 'package:divya/screens/trackRecording/trackList.dart';
 import 'package:divya/screens/witness.dart';
+import 'package:divya/services/searchSong.dart';
 import 'package:divya/services/song_provider.dart';
+import 'package:epub_view/epub_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +42,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   int currentCategoryIndex = 0;
   final User? user = Auth().currentUser;
   bool searching = false;
@@ -708,15 +711,21 @@ class _MyHomePageState extends State<MyHomePage> {
                       image: AssetImage('images/worship.jpg'),
                       fit: BoxFit.cover)),
             ),
-            onTap: () {}
-            //     Navigator.of(context).push(PageTransition(
-            //     child: const EpubReader(),
-            //     type: PageTransitionType.rightToLeft,
-            //     duration: const Duration(milliseconds: 600),
-            //     reverseDuration: const Duration(milliseconds: 600),
-            //     opaque: false)
-            //
-            // )
+            onTap: () {
+
+                //         Navigator.of(context).push(PageTransition(
+                // child:  EpubReader()
+                // type: PageTransitionType.rightToLeft,
+                // duration: const Duration(milliseconds: 600),
+                // reverseDuration: const Duration(milliseconds: 600),
+                // opaque: false)
+
+
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => EpubReaders()));
+
+
+  }
         ));
   }
 
@@ -736,8 +745,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       fit: BoxFit.cover)),
             ),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TrackList()));
+              // Navigator.push(context,
+              //     MaterialPageRoute(builder: (context) => SearchSongsPage(songList: _songList)));
             }));
   }
 }

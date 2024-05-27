@@ -1,82 +1,160 @@
-// import 'dart:typed_data';
-//
-// import 'package:epub_view/epub_view.dart';
-// import 'package:flutter/material.dart';
-//
-// class EpubReader extends StatefulWidget {
-//   const EpubReader({Key? key}) : super(key: key);
-//
-//   @override
-//   _EpubReader createState() => _EpubReader();
-// }
-//
-// class _EpubReader extends State<EpubReader> {
-//   late EpubController _epubReaderController;
-//   late final Uint8List ares = Uint8List(0);
-//
-//   @override
-//   void initState() {
-//     _epubReaderController = EpubController(
-//         document: EpubDocument.openAsset('assets/Romanized.epub'));
-//     // epubCfi:
-//     //     'epubcfi(/6/26[id4]!/4/2/2[id4]/22)', // book.epub Chapter 3 paragraph 10
-//     // epubCfi:
-//     //     'epubcfi(/6/6[chapter-2]!/4/2/1612)', // book_2.epub Chapter 16 paragraph 3
-//
-//     super.initState();
-//   }
-//
-//   @override
-//   void dispose() {
-//     _epubReaderController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) => Scaffold(
-//         appBar: AppBar(
-//           title: EpubViewActualChapter(
-//             controller: _epubReaderController,
-//             builder: (chapterValue) => Text(
-//               chapterValue?.chapter?.Title?.replaceAll('\n', '').trim() ?? '',
-//               textAlign: TextAlign.start,
-//             ),
-//           ),
-//           actions: <Widget>[
-//             IconButton(
-//               icon: const Icon(Icons.save_alt),
-//               color: Colors.white,
-//               onPressed: () => _showCurrentEpubCfi(context),
-//             ),
-//           ],
-//         ),
-//         drawer: Drawer(
-//           child: EpubViewTableOfContents(controller: _epubReaderController),
-//         ),
-//         body: EpubView(
-//           builders: EpubViewBuilders<DefaultBuilderOptions>(
-//             options: const DefaultBuilderOptions(),
-//             chapterDividerBuilder: (_) => const Divider(),
-//           ),
-//           controller: _epubReaderController,
-//         ),
-//       );
-//
-//   void _showCurrentEpubCfi(context) {
-//     final cfi = _epubReaderController.generateEpubCfi();
-//
-//     if (cfi != null) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(
-//           content: Text(cfi),
-//           action: SnackBarAction(
-//             label: 'GO',
-//             onPressed: () {
-//               _epubReaderController.gotoEpubCfi(cfi);
-//             },
-//           ),
-//         ),
-//       );
-//     }
-//   }
-// }
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:vocsy_epub_viewer/epub_viewer.dart';
+
+
+class EpubReaders extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<EpubReaders> {
+  bool loading = false;
+  Dio dio = Dio();
+  String filePath = "";
+
+  @override
+  void initState() {
+    download();
+    super.initState();
+  }
+
+  download() async {
+    if (Platform.isAndroid || Platform.isIOS) {
+      String? firstPart;
+      final deviceInfoPlugin = DeviceInfoPlugin();
+      final deviceInfo = await deviceInfoPlugin.deviceInfo;
+      final allInfo = deviceInfo.data;
+      if (allInfo['version']["release"].toString().contains(".")) {
+        int indexOfFirstDot = allInfo['version']["release"].indexOf(".");
+        firstPart = allInfo['version']["release"].substring(0, indexOfFirstDot);
+      } else {
+        firstPart = allInfo['version']["release"];
+      }
+      int intValue = int.parse(firstPart!);
+    }
+  }
+    //   if (intValue >= 13) {
+    //     await startDownload();
+    //   } else {
+    //     if (await Permission.storage.isGranted) {
+    //       await Permission.storage.request();
+    //       await startDownload();
+    //     } else {
+    //       await startDownload();
+    //     }
+    //   }
+    // } else {
+    //   loading = false;
+    // }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Vocsy Plugin E-pub example'),
+        ),
+        body: Center(
+          child: loading
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              Text('Downloading.... E-pub'),
+            ],
+          )
+              : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  print("=====filePath======$filePath");
+                  if (filePath == "") {
+                    download();
+                  } else {
+                    VocsyEpub.setConfig(
+                      themeColor: Theme.of(context).primaryColor,
+                      identifier: "iosBook",
+                      scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                      allowSharing: true,
+                      enableTts: true,
+                      nightMode: true,
+                    );
+
+                    // // get current locator
+                    // VocsyEpub.locatorStream.listen((locator) {
+                    //   print('LOCATOR: $locator');
+                    // });
+
+                    VocsyEpub.open(
+                      filePath,
+                             );
+                  }
+                },
+                child: Text('Open Online E-pub'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  VocsyEpub.setConfig(
+                    themeColor: Theme.of(context).primaryColor,
+                    identifier: "iosBook",
+                    scrollDirection: EpubScrollDirection.ALLDIRECTIONS,
+                    allowSharing: true,
+                    enableTts: true,
+                    nightMode: true,
+                  );
+                  // get current locator
+                  VocsyEpub.locatorStream.listen((locator) {
+                    print('LOCATOR: $locator');
+                  });
+                  await VocsyEpub.openAsset(
+                    'assets/sansarma.epub',
+                               );
+                },
+                child: Text('Open Assets E-pub'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // startDownload() async {
+  //   Directory? appDocDir = Platform.isAndroid ? await getExternalStorageDirectory() : await getApplicationDocumentsDirectory();
+  //
+  //   String path = appDocDir!.path + '/sample.epub';
+  //   File file = File(path);
+  //
+  //   if (!File(path).existsSync()) {
+  //     await file.create();
+  //     await dio.download(
+  //       "https://vocsyinfotech.in/envato/cc/flutter_ebook/uploads/22566_The-Racketeer---John-Grisham.epub",
+  //       path,
+  //       deleteOnError: true,
+  //       onReceiveProgress: (receivedBytes, totalBytes) {
+  //         setState(() {
+  //           loading = true;
+  //         });
+  //       },
+  //     ).whenComplete(() {
+  //       setState(() {
+  //         loading = false;
+  //         filePath = path;
+  //       });
+  //     });
+  //   } else {
+  //     setState(() {
+  //       loading = false;
+  //       filePath = path;
+  //     });
+  //   }
+  // }
+}

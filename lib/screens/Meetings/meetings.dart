@@ -24,13 +24,11 @@ class MyMeetingScreen extends StatefulWidget {
 class _MyMeetingScreenState extends State<MyMeetingScreen> {
   late List<MyMeetingObject> myMeetingObjects = [];
 
-//  late List<bool> isSelected;
   bool _showPlaces = false;
   int selectedIndex = -1;
   late List<DocumentSnapshot> meetingDocuments = [];
   DocumentSnapshot<Object?>? _selectedMeeting;
   List<bool> selectedCards = [];
-
 
   @override
   void initState() {
@@ -54,18 +52,18 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
   }
 
   void initializeSelectedCards() {
-    selectedCards = List.generate(
-      meetingDocuments.length,
-          (index) => index == 0,
-    );
+    if (meetingDocuments.isNotEmpty) {
+      selectedCards = List.generate(
+        meetingDocuments.length,
+            (index) => index == 0,
+      );
+    }
   }
-
-
 
   void togglePlaces(int index) {
     setState(() {
-      if (selectedCards.isEmpty) {
-        initializeSelectedCards();
+      if (meetingDocuments.isEmpty) {
+        return; // Exit early if meetingDocuments is empty
       }
 
       if (selectedIndex == index) {
@@ -81,7 +79,6 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,19 +109,19 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(), // Display a loading indicator
+                  );
+                }
+
                 if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
 
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                   return Center(
-                    child: Shimmer.fromColors(
-                      child: Container(
-                        color: Colors.white, // Placeholder color
-                      ),
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                    ),
+                    child: Text("No meetings found"), // Display a message if there are no meetings
                   );
                 }
 
@@ -134,89 +131,95 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
                   padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: SizedBox.expand(
                     child: Stack(
-                      children: List.generate(meetingDocuments.length, (index) {
-                        final document = meetingDocuments[index];
-                        final meeting = document['meeting'] as String;
-                        final imageUrl = document['image'] as String;
-                        bool isSelected = selectedCards[index];
+                        children: List.generate(
+                          meetingDocuments.length,
+                              (index) {
+                            final document = meetingDocuments[index];
+                            final meeting = document['meeting'] as String;
+                            final imageUrl = document['image'] as String?;
+                            bool isSelected = selectedCards.isNotEmpty && index < selectedCards.length ? selectedCards[index] : false;
+
+
 
                         return Positioned(
-                          top: index * 70.0,
-                          left: index * 1.0,
-                          child: GestureDetector(
-                            onTap: () {
-                              togglePlaces(index);
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width *
-                                  0.94, // Specify the desired width
-                              height: MediaQuery.of(context).size.height *
-                                  0.27, // Specify the desired height
-                              child: Card(
-                                elevation: 5.0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  child: Stack(
-                                    children: [
-                                      if (imageUrl != null)
-                                        CachedNetworkImage(
-                                          imageUrl: imageUrl,
-                                          fit: BoxFit.cover,
-                                          width: double.infinity,
-                                          height: double.infinity,
-                                          placeholder: (BuildContext context,
-                                                  String url) =>
-                                              Shimmer.fromColors(
-                                            child: Container(
-                                              color: Colors
-                                                  .white, // Placeholder color
-                                            ),
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
+                            top: index * 70.0,
+                            left: index * 1.0,
+                            child: GestureDetector(
+                              onTap: () {
+                                togglePlaces(index);
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width *
+                                    0.94, // Specify the desired width
+                                height: MediaQuery.of(context).size.height *
+                                    0.27, // Specify the desired height
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                    child: Stack(
+                                      children: [
+                                        if (imageUrl != null)
+                                          CachedNetworkImage(
+                                            imageUrl: imageUrl,
+                                            fit: BoxFit.cover,
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                            placeholder: (BuildContext context,
+                                                String url) =>
+                                                Shimmer.fromColors(
+                                                  child: Container(
+                                                    color: Colors
+                                                        .white, // Placeholder color
+                                                  ),
+                                                  baseColor: Colors.grey[300]!,
+                                                  highlightColor:
+                                                  Colors.grey[100]!,
+                                                ),
+                                            errorWidget: (BuildContext context,
+                                                String url, dynamic error) =>
+                                                Container(
+                                                  color: Colors
+                                                      .grey, // Placeholder color
+                                                ),
                                           ),
-                                          errorWidget: (BuildContext context,
-                                                  String url, dynamic error) =>
-                                              Container(
-                                            color: Colors
-                                                .grey, // Placeholder color
-                                          ),
-                                        ),
-                                      Positioned(
-                                        top: 20.0,
-                                        left: 20.0,
-                                        child: Text(
-                                          textAlign: TextAlign.center,
-                                          // Aligns the text to the center
-                                          meeting.tr,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 25.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: "abcdef",
-                                          ),
-                                        ),
-                                      ),
-                                      if (isSelected)
                                         Positioned(
-                                          top: 30.0,
-                                          right: 15.0,
-                                          child: Icon(
-                                            Icons.check_circle,
-                                            color: Colors.black,
-                                            size: 15.0,
+                                          top: 20.0,
+                                          left: 20.0,
+                                          child: Text(
+                                            textAlign: TextAlign.center,
+                                            // Aligns the text to the center
+                                            meeting.tr,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 25.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: "abcdef",
+                                            ),
                                           ),
                                         ),
-                                    ],
+                                        if (isSelected)
+                                          Positioned(
+                                            top: 30.0,
+                                            right: 15.0,
+                                            child: Icon(
+                                              Icons.check_circle,
+                                              color: Colors.black,
+                                              size: 15.0,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 );
@@ -227,28 +230,30 @@ class _MyMeetingScreenState extends State<MyMeetingScreen> {
             visible: selectedCards.any((isSelected) => isSelected),
             child: selectedCards.any((isSelected) => isSelected)
                 ? SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                        color: Colors.white,
-                      ),
-                      child: PlacesScreen(
-                        meeting: meetingDocuments[selectedCards.indexOf(true)]
-                            ['meeting'] as String,
-                        meetingId:
-                            meetingDocuments[selectedCards.indexOf(true)].id,
-                        country: widget.country,
-                      ),
-                    ),
-                  )
+              width: MediaQuery.of(context).size.width * 0.95,
+              height: MediaQuery.of(context).size.height * 0.2,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  color: Colors.white,
+                ),
+                child: PlacesScreen(
+                  meeting: meetingDocuments[selectedCards.indexOf(true)]
+                  ['meeting'] as String,
+                  meetingId:
+                  meetingDocuments[selectedCards.indexOf(true)].id,
+                  country: widget.country,
+                ),
+              ),
+            )
                 : Text("No Data Available"),
           ),
         ],
       ),
-      floatingActionButton: provider.playingSong != null ? MiniPlayer() : null,
+      floatingActionButton:
+      provider.playingSong != null ? MiniPlayer() : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
+

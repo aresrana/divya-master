@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
     configurations {
         implementation.exclude module: 'firebase-analytics-impl'
@@ -66,6 +66,7 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
         targetSdkVersion 27
+
         multiDexEnabled true
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -94,7 +95,7 @@ android {
             minifyEnabled false
             multiDexEnabled true
             shrinkResources false
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
 
         }
 

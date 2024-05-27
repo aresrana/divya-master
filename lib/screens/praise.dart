@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'package:divya/model/song.dart';
 import '../componet/mini_player.dart';
-import '../model/song.dart';
+import '../services/songHelper.dart';
 import '../widgets/song_widget.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+
 
 class PraisePage extends StatefulWidget {
   const PraisePage({Key? key}) : super(key: key);
@@ -15,27 +18,55 @@ class PraisePage extends StatefulWidget {
 }
 
 class _PraisePageState extends State<PraisePage> {
-  int currentCategoryIndex = 0;
-  bool searching = false;
   List<Song> _songList = [];
-  FocusNode focusNode = FocusNode();
+
 
   @override
   void initState() {
-    Provider.of<SongProvider>(context, listen: false)
-        .getSongsByCollection('Praise')
-        .then((value) {
-      setState(() {
-        _songList = value;
-      });
-    });
     super.initState();
+    _fetchSongsAndCache();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
+  Future<void> _fetchSongsAndCache() async {
+    // Fetch songs directly from Firestore
+    List<Song> songs = await Provider.of<SongProvider>(context, listen: false).getSongsByCollection('Praise');
+    setState(() {
+      _songList = songs;
+    });
+
+    // Cache and store songs in the local database
+    await _cacheSongs(songs);
+
+    // Update the song list
+
+
+    // Print the count of songs
+    print('Count of songs: ${_songList.length}');
   }
+
+  Future<void> _cacheSongs(List<Song> songs) async {
+    for (var song in songs) {
+      // Check if the song is already cached
+      FileInfo? fileInfo = await DefaultCacheManager().getFileFromCache(song.music);
+      if (fileInfo == null || fileInfo.file == null) {
+        // Cache the song if not already cached
+        await DefaultCacheManager().downloadFile(song.music);
+        print('Song ${song.title} cached successfully.');
+      } else {
+        print('Song ${song.title} is already cached.');
+        print('Song ${song.title} is already cached.');
+      }
+
+      // Check if the song is stored in the local database
+      bool songExists = await SongDatabaseHelper.songExists(song.music);
+      if (!songExists) {
+        // Insert the song into the local database
+        await SongDatabaseHelper.insertSong(song);
+        print('Song ${song.title} stored in the local database.');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +160,7 @@ class _PraisePageState extends State<PraisePage> {
                         final song = _songList[index];
                         return SongWidget(
                           song: song,
-                          playingSongList: _songList,
+                          playingSongList: _songList, collectionName: 'Praise',
                         );
                       },
                     ),
@@ -142,3 +173,5 @@ class _PraisePageState extends State<PraisePage> {
 
 //body
 }
+
+

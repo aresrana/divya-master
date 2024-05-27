@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:divya/model/song.dart';
@@ -45,12 +46,23 @@ class AudioPlayerService {
   }
 
   playSong(Song song) async {
-    // final file = await DefaultCacheManager().getSingleFile(song.music);
-    // String filePath = file.path;
+    // Check if the song is cached
+    FileInfo? fileInfo = await DefaultCacheManager().getFileFromCache(song.music);
+    if (fileInfo != null && fileInfo.file != null) {
+      // Song is cached, play it from cache
+      String filePath = fileInfo.file!.path;
+      await _audioPlayer.pause();
+      await _audioPlayer.seek(Duration.zero);
+      await _audioPlayer.play(filePath);
+      return;
+    }
+
+    // Song is not cached, continue with original logic
     await _audioPlayer.pause();
     await _audioPlayer.seek(Duration.zero);
     await _audioPlayer.play(song.music);
   }
+
 
   dispose() {
     _audioPlayer.dispose();

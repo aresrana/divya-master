@@ -70,7 +70,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                           icon: const Icon(
                             Icons.skip_previous,
                             color: Colors.white,
-                            size: 30,
+                            size: 20,
                           ),
                           onPressed: () async {
                             provider.playPrevSong();
@@ -86,7 +86,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                                 ? Icons.play_arrow_rounded
                                 : Icons.pause,
                             color: Colors.white,
-                            size: 30,
+                            size: 20,
                           ),
                           onPressed: () async {
                             if (audioPlayerService.isPlaying) {
@@ -104,7 +104,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                           icon: const Icon(
                             Icons.skip_next,
                             color: Colors.white,
-                            size: 30,
+                            size: 20,
                           ),
                           onPressed: () {
                             provider.playNextSong();
@@ -124,7 +124,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                         text: name + "   " + title,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 15,
+                          fontSize: 13,
                         ),
                       ),
                       onTap: () {
@@ -140,7 +140,7 @@ class _MiniPlayer extends State<MiniPlayer> {
                     SliderTheme(
                       data: SliderThemeData(
                         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0),
-                        overlayShape: RoundSliderOverlayShape(overlayRadius: 10.0),
+                        overlayShape: RoundSliderOverlayShape(overlayRadius: 5.0),
                       ),
                       child: Slider(
                         value: position.inMilliseconds.toDouble().clamp(0.0, duration.inMilliseconds.toDouble()),
@@ -155,20 +155,6 @@ class _MiniPlayer extends State<MiniPlayer> {
 
                       ),
                     ),
-
-
-
-                    // Container(
-                //     padding: EdgeInsets.all(20),
-                //     child: Row(
-                //       children: [
-                //         Text(formatTime(
-                //             audioPlayerService.position.inSeconds)),
-                //         Text(formatTime(
-                //             (audioPlayerService.duration.inSeconds -
-                //                 audioPlayerService.position.inSeconds))),
-                //       ],
-                //     ))
               ]);
             }));
   }

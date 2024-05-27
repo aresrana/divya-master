@@ -5,12 +5,14 @@ class Song {
   String name;
   String title;
   String url;
+  String collection; // New field for collection name
 
   Song({
     required this.music,
     required this.name,
     required this.title,
     required this.url,
+    required this.collection, // Added collection field
   });
 
   Song copyWith({
@@ -18,12 +20,14 @@ class Song {
     String? name,
     String? title,
     String? url,
+    String? collection, // Added collection field
   }) {
     return Song(
       music: music ?? this.music,
       name: name ?? this.name,
       title: title ?? this.title,
       url: url ?? this.url,
+      collection: collection ?? this.collection, // Added collection field
     );
   }
 
@@ -33,6 +37,7 @@ class Song {
       'name': name,
       'title': title,
       'url': url,
+      'collection': collection, // Added collection field
     };
   }
 
@@ -42,6 +47,7 @@ class Song {
       name: map['name'] ?? '',
       title: map['title'] ?? '',
       url: map['url'] ?? '',
+      collection: map['collection'] ?? '', // Added collection field
     );
   }
 
@@ -51,7 +57,7 @@ class Song {
 
   @override
   String toString() {
-    return 'Song(music: $music, name: $name, title: $title, url: $url)';
+    return 'Song(music: $music, name: $name, title: $title, url: $url, collection: $collection)';
   }
 
   @override
@@ -62,11 +68,16 @@ class Song {
         other.music == music &&
         other.name == name &&
         other.title == title &&
-        other.url == url;
+        other.url == url &&
+        other.collection == collection; // Added collection field
   }
 
   @override
   int get hashCode {
-    return music.hashCode ^ name.hashCode ^ title.hashCode ^ url.hashCode;
+    return music.hashCode ^
+    name.hashCode ^
+    title.hashCode ^
+    url.hashCode ^
+    collection.hashCode; // Added collection field
   }
 }

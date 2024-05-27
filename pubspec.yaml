@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   firebase_core: ^2.14.0
-  firebase_storage: ^11.2.3
+  firebase_storage: ^11.4.0
   webview_flutter_plus: ^0.3.0+2
   audioplayers: ^0.20.1
   marquee: ^2.2.3
@@ -50,7 +50,7 @@ dependencies:
   dio: ^5.2.1+1
   flutter_launcher_icons:
   permission_handler: ^10.2.0
-  advance_pdf_viewer:
+ # advance_pdf_viewer:
   shared_preferences: ^2.1.2
   flutter_cache_manager: ^3.3.0
   http: ^0.13.6
@@ -60,7 +60,6 @@ dependencies:
   flutter_image_compress: ^2.0.1
   flutter_settings_screens: ^0.3.3-null-safety+2
   cached_network_image: ^3.2.3
-  volume_controller: ^2.0.7
   timeline_list: ^0.0.6
   timeline_tile: ^2.0.0
   flutter_sound: ^9.2.13
@@ -74,17 +73,23 @@ dependencies:
   get: ^4.6.5
   equalizer_flutter: ^0.0.1
   random_color: ^1.0.6-nullsafety
-  cloud_firestore: ^4.8.0
-  firebase_auth: ^4.6.2
+  cloud_firestore: ^4.12.1
+  firebase_auth: ^4.15.2
   path: ^1.8.2
   fluttertoast: ^8.2.2
   mailer: ^6.0.1
   emailjs: ^1.1.0
-
-
-
-
-
+  sqflite: ^2.3.2
+ # connectivity: ^3.0.6
+  flutter_lyric: ^2.0.4+6
+  flutter_chord: ^0.1.2
+  epub_view: ^3.2.0
+  vocsy_epub_viewer: ^2.0.0
+  #audio_session: ^0.1.19
+  just_audio: ^0.9.37
+  printing: ^5.9.3
+  volume_controller: ^2.0.7
+  audio_session: ^0.1.19
 
 
 
@@ -149,6 +154,9 @@ flutter:
     - assets/language/en.json
     - images/clock.jpg
     - images/meet.jpg
+    - assets/Romanized.docx
+    - assets/sansarma.epub
+    - assets/church.pdf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
